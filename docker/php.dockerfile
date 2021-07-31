@@ -30,7 +30,7 @@ COPY ./php_alpine_entrypoint.sh /
 
 RUN chmod 777 /php_alpine_entrypoint.sh
 
-RUN touch /var/log/xdebug.log && chmod 777 /var/log/xdebug.log
+RUN touch /var/log/xdebug.log && chmod 775 /var/log/xdebug.log
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && pecl install xdebug-3.0.0 \

@@ -4,7 +4,6 @@ install-dev: file-permission dependency-install generate-app-key migration optim
 file-permission:
 	chmod -R 775 storage
 	chmod 775 bootstrap/cache/
-	chown -R laravel:www-data . storage
 
 migration:
 	php artisan migrate:reset
