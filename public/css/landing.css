@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'Manrope';
+    src: url('/fonts/Manrope/Manrope-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: 'Manrope';
+    src: url('/fonts/Manrope/Manrope-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+    font-weight: 500;
+}
+
+.container {
+    max-width: 1160px;
+    padding: 0 50px;
+}
+.navbar {
+    font-family: 'Manrope';
+}
+
+.nav-link, .navbar-brand {
+    color: #18191F !important;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.nav-link {
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0 16px !important;
+}
+
+.navbar-container {
+    padding-top: 1.5vw;
+}
+
+.button {
+    color: white !important;
+    border-radius: 8px;
+    background-color: #090B3D;
+    padding: 12px 20px !important;
+    text-decoration: none;
+
+}
+
+.hero-section {
+    font-family: 'Manrope';
+}
+
+#heading {
+    font-weight: 700;
+    font-size: 55px;
+    line-height: 64px;
+}
+
+.gap-between-hero-and-navbar {
+    margin-top: 80px;
+}
+
+#the-highlighted-word {
+    color: #FF4F4F !important;
+    font-weight: 800;
+    font-size: 54px;
+}
+
+#hero-description {
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 25px;
+    color: #353535 !important;
+    line-height: 34.5px;
+}
+
+#free-trial-button {
+    padding: 15px 32px !important;
+    font-size: 20px;
+}
