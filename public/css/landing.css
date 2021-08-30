@@ -11,6 +11,18 @@
 }
 
 @font-face {
+    font-family: 'Manrope';
+    src: url('/fonts/Manrope/Manrope-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Manrope';
+    src: url('/fonts/Manrope/Manrope-Medium.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
     font-family: 'Poppins';
     src: url('/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
     font-weight: 500;
@@ -22,10 +34,21 @@
     font-weight: 600;
 }
 
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+h1 {
+    font-family: 'Manrope';
+}
+
 .container {
-    max-width: 1160px;
+    max-width: 1180px;
     padding: 0 50px;
 }
+
 .navbar {
     font-family: 'Manrope';
 }
@@ -41,12 +64,16 @@
 
 .nav-link {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     padding: 0 16px !important;
 }
 
 .navbar-container {
-    padding-top: 1.5vw;
+    padding-top: 1vw;
+}
+
+.free-trial-button {
+    background-color: #FF0000 !important;
 }
 
 .button {
@@ -64,31 +91,26 @@
 
 #heading {
     font-weight: 700;
-    font-size: 55px;
-    line-height: 64px;
+    font-size: 47px;
+    line-height: 59px;
+    color: #080A3E;
 }
 
 .gap-between-hero-and-navbar {
-    margin-top: 80px;
-}
-
-#the-highlighted-word {
-    color: #FF4F4F !important;
-    font-weight: 800;
-    font-size: 54px;
+    margin-top: 60px;
 }
 
 #hero-description {
-    font-family: 'Poppins';
     font-weight: 500;
-    font-size: 25px;
+    font-size: 23px;
     color: #353535 !important;
     line-height: 34.5px;
 }
 
 #free-trial-button {
     padding: 15px 32px !important;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 #free-trial-message {
@@ -96,4 +118,30 @@
     font-size: 20px;
     color: #222222;
     font-weight: 600;
+}
+
+#hero-image {
+    filter: drop-shadow(0px 4px 46px rgba(77, 29, 169, 0.22));
+}
+
+.medium-weight-headline {
+    font-weight: 500;
+}
+
+.bold-weight-headline {
+    font-weight: 700;
+}
+
+.headline-blue-color {
+    color: #080A3E;
+}
+
+p {
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 21px;
+}
+
+.purple {
+    color: #3A005E;
 }
