@@ -23,7 +23,7 @@
         </li>
       </ul>
       <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
-          <li class="nav-item"><a class="nav-link button" href="https://themes.getbootstrap.com/signin/">Client Area</a></li>
+          <li class="nav-item"><a class="nav-link button" href="https://themes.getbootstrap.com/signin/">Sign In</a></li>
       </ul>
     </div>
   </div>

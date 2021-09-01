@@ -22,7 +22,7 @@
                     <p>See the list of the available industries, categogries or topics we offer our articles</p>
                 </div>
             </div>
-            <div class="col-md-3 order-md-1">
+            <div class="col-md-3 order-md-1 d-none d-lg-block">
                 <img src="/svg/seo-hero.svg" id="2-section-hero-image" style="max-width: 320px;" class="img-fluid" alt="...">
             </div>
         </div>

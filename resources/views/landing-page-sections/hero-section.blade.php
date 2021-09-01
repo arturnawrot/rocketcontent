@@ -1,7 +1,7 @@
 <section class="pt-4 pt-md-11 hero-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-12 col-md-4 col-lg-5 order-md-2 d-flex justify-content-end">
+            <div class="col-12 col-md-4 col-lg-5 order-md-2 d-flex justify-content-end d-none d-lg-block">
                 <img src="/svg/rocket-hero.svg" id="hero-image" class="img-fluid" alt="...">
             </div>
 

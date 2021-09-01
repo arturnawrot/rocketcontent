@@ -21,5 +21,8 @@
             @include('landing-page-sections.2-section')
         </div>
 
+        <div class="mt-5">
+            @include('landing-page-sections.3-section')
+        </div>
     </body>
 </html>
