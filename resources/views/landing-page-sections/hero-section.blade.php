@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="pt-5" id="free-trial-message">
+            <div class="pt-5 text-center text-md-start" id="free-trial-message">
                 14-Day Free trial for new customers.
             </div>
 

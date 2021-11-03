@@ -10,15 +10,15 @@
             </div>
         </div>
 
-        <div class="row mt-5 pt-4">
-            <div class="col-md-5 order-md-1 d-flex flex-wrap align-items-center">
+        <div class="row mt-3 pt-4 d-flex flex-wrap align-items-center">
+            <div class="col-md-12 col-lg-5 order-md-1 pt-sm-5 d-flex justify-content-center">
                 <div style="max-width: 660px;">
                     <p><span class="purple bold-weight-headline">Quisque id mauris pulvinar, </span> hendrerit diam quis, interdum orci. Curabitur a scelerisque tortor, et pulvinar ex. Nulla facilisi.</p>
                     <p><span class="purple bold-weight-headline">leifend. Vestibulum ultrices </span> nec odio eu euismod. Nullam fringilla, purus bibendum pellentesque convallis, velit elit placerat.</p>
                     <p><span class="purple bold-weight-headline">Quisque id mauris pulvinar, </span> hendrerit diam quis, interdum orci. Curabitur a scelerisque tortor, et pulvinar ex. Nulla facilisi.</p>
                 </div>
             </div>
-            <div class="col-sm-12 col-lg-7 order-lg-2 d-md-flex d-sm-none justify-content-end">
+            <div class="col-sm-12 col-lg-7 order-lg-2 d-md-flex pt-sm-3 justify-content-center">
                 <img src="/img/dashboard.png" id="3-section-hero-image" style="max-width: 660px;" class="w-100 img-fluid">
             </div>
         </div>

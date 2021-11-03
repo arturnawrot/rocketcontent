@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="row mt-5 pt-4">
+        <div class="row mt-5 pt-4 justify-content-center">
             <div class="col-md-9 order-md-2 d-flex justify-content-end">
                 <div style="max-width: 660px;">
                     <p><span class="purple bold-weight-headline">Quisque id mauris pulvinar, </span> hendrerit diam quis, interdum orci. Curabitur a scelerisque tortor, et pulvinar ex. Nulla facilisi. Cras at aliquet sem. Duis vitae lectus nec sem venenatis e</p>
