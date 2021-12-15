@@ -14,15 +14,15 @@
         @include('inc.navbar')
 
         <div class="gap-between-hero-and-navbar">
-            @include('landing-page-sections.hero-section')
+            @include('landing/landing-page-sections.hero-section')
         </div>
 
         <div class="mt-5">
-            @include('landing-page-sections.2-section')
+            @include('landing/landing-page-sections.2-section')
         </div>
 
         <div class="mt-5">
-            @include('landing-page-sections.3-section')
+            @include('landing/landing-page-sections.3-section')
         </div>
     </body>
 </html>

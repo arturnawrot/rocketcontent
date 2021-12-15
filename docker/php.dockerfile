@@ -1,11 +1,5 @@
 FROM php:8.0-fpm-alpine
 
-ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
-
-ADD ./php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
-
-ADD ./php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
 RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
 
 RUN mkdir -p /var/www/html
@@ -36,5 +30,15 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && pecl install xdebug-3.0.0 \
     && docker-php-ext-enable xdebug \
     && apk del -f .build-deps
+
+RUN apk upgrade --update-cache --available && \
+apk add openssl && \
+rm -rf /var/cache/apk/*
+
+ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+ADD ./php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
+
+ADD ./php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 ENTRYPOINT /php_alpine_entrypoint.sh

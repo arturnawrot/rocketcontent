@@ -1,8 +1,5 @@
 version: '3'
 
-networks:
-  laravel:
-
 services:
   site:
     build:
@@ -19,6 +16,7 @@ services:
       - mysql
     networks:
       - laravel
+      
 
   mysql:
     image: mysql:5.7.29
@@ -49,3 +47,10 @@ services:
       - "9000:9000"
     networks:
       - laravel
+    dns: 
+      - 8.8.8.8
+      - 8.8.4.4
+
+networks:
+  laravel:
+    name: laravel
