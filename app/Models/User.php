@@ -7,14 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
+use App\Helpers\StripeConfig;
+use App\Models\Traits\Presentable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, Billable;
+    use HasFactory, Notifiable, Billable, Presentable;
 
     public const ACCOUNT_TYPES = [
         'ADMIN', 'CUSTOMER', 'WRITER'
     ];
+
+    protected $presenter = 'App\Presenters\UserPresenter';
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'account_type'
+        'account_type',
+        'trial_ends_at',
     ];
 
     /**
@@ -47,7 +52,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isSubscribing() : bool {
+        return $this->subscribed(StripeConfig::PRODUCT_NAME);
+    }
+
+    public function isOnTrial() : bool {
+        return $this->isSubscribing() && $this->trial_ends_at > now();
+    }
+
     public function isRemovable() : bool {
-        return False;
+        return !$this->isSubscribing();
     }
 }

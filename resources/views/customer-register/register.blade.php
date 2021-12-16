@@ -1,7 +1,19 @@
+@include('inc.errors')
+
 <form id="registration-form" method="POST" action="{{ route('customer-register.register') }}">
     @csrf
 
     <input type="hidden" id="payment-method" name="payment_method">
+
+    <input type="text" name="name" value="Odwazny Rycesz">
+
+    <input type="text" name="email" value="OdwasznyRycesz@gmail.com">
+
+    <input type="password" name="password" value="odwasznyrycesz12312">
+
+    <input type="text" name="recurring_type" value="monthly">
+
+    <input type="text" name="wordCount" value="4000">
 
     <input id="card-holder-name" type="text">
 

@@ -13,4 +13,4 @@ Route::get('/dev/phpinfo', [App\Http\Controllers\Dev\ShowPHPInfoController::clas
 
 Route::view('/admin2131sa', 'admin/home')->name('admin.home');
 
-Route::get('/admin2131sa/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
+Route::get('/admin2131sa/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('admin.customers.index');

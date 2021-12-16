@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Stripe\StripeClient;
+use App\Helpers\StripeConfig;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,25 +23,25 @@ class DatabaseSeeder extends Seeder
         $products = [];
 
         $this->stripe->products->create([
-            'id' => 'product_writing_service',
+            'id' => StripeConfig::PRODUCT_NAME,
             'name' => 'rocketcontent.io - Contnet Writing Service.',
         ]);
 
         $this->stripe->plans->create([
-            'id' => 'price_writing_service_annual',
-            'amount' => 10,
+            'id' => StripeConfig::ANNUAL_PLAN['name'],
+            'amount' => StripeConfig::ANNUAL_PLAN['price'],
             'currency' => 'usd',
             'interval' => 'month',
-            'product' => 'product_writing_service',
+            'product' => StripeConfig::PRODUCT_NAME,
             'billing_scheme' => 'per_unit'
           ]);
 
           $this->stripe->plans->create([
-            'id' => 'price_writing_service_monthly',
-            'amount' => 11,
+            'id' => StripeConfig::MONTHLY_PLAN['name'],
+            'amount' => StripeConfig::MONTHLY_PLAN['price'],
             'currency' => 'usd',
             'interval' => 'month',
-            'product' => 'product_writing_service',
+            'product' => StripeConfig::PRODUCT_NAME,
             'billing_scheme' => 'per_unit'
           ]);
     }

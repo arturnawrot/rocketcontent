@@ -2,7 +2,7 @@
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
         <a href="index.html">
-          <img src="admin/images/logo/logo.svg" alt="logo" />
+          <img src="/admin/images/logo/logo.svg" alt="logo" />
         </a>
       </div>
       <nav class="sidebar-nav">

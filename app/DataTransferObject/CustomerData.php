@@ -6,15 +6,9 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class CustomerData extends DataTransferObject
 {
-    public string $firstName;
+    public UserData $userData;
 
-    public string $lastName;
-
-    public string $email;
-
-    public string $companyName;
-    
-    public string $password;
+    public string $paymentIntent;
 
     public SubscriptionData $subscriptionData;
 }

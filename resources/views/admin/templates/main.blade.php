@@ -25,8 +25,6 @@
     <!-- ======== main-wrapper start =========== -->
     <main class="main-wrapper">
 
-      @include('admin.inc.header')
-
       <!-- ========== section start ========== -->
       <section class="section">
         <div class="container-fluid">

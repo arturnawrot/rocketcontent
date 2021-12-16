@@ -10,14 +10,14 @@ class UserRepository {
     }
 
     public static function getAdmins() {
-        return User::Where('type', 'ADMIN')->get();
+        return User::Where('account_type', 'ADMIN')->get();
     }
 
     public static function getCustomers() {
-        return User::Where('type', 'CUSTOMER')->get();
+        return User::Where('account_type', 'CUSTOMER')->get();
     }
 
     public static function getWriters() {
-        return User::Where('type', 'WRITER')->get();
+        return User::Where('account_type', 'WRITER')->get();
     }
 }
