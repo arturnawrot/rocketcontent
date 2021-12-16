@@ -35,20 +35,3 @@ class CustomerRegisterController extends Controller
         ]);
     }
 }
-
-
-        // $user = User::create([
-        //     'name' => 'Czeslaw Niemen2',
-        //     'email' => 'CzeslawJestem2@gmail.com',
-        //     'account_type' => 'CUSTOMER',
-        //     'password' => bcrypt('Drzewo'),
-        //     'trial_ends_at' => now()->addDays(14),
-        // ]);
-
-        // $user->createAsStripeCustomer();
-        // $user->addPaymentMethod( $request->payment_method );
-        // $user->updateDefaultPaymentMethod( $request->payment_method );
-
-        // $user->newSubscription('product_writing_service', 'price_writing_service_monthly')
-        //     ->quantity(4000)
-        //     ->create($request->payment_method);
