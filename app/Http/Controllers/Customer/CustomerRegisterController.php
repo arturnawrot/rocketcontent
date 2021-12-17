@@ -30,7 +30,7 @@ class CustomerRegisterController extends Controller
     {
         $user = new User;
 
-        return view('customer-register/register', [
+        return view('customer/register', [
             'intent' => $user->createSetupIntent()
         ]);
     }
