@@ -43,13 +43,11 @@ services:
     container_name: php-rocketcontent
     volumes:
       - .:/var/www/html
+      - ./docker/etc/resolv.conf:/etc/resolv.conf
     ports:
       - "9000:9000"
     networks:
       - laravel
-    dns: 
-      - 8.8.8.8
-      - 8.8.4.4
 
 networks:
   laravel:

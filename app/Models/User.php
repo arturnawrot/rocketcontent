@@ -63,4 +63,8 @@ class User extends Authenticatable
     public function isRemovable() : bool {
         return !$this->isSubscribing();
     }
+
+    public function daysBeforeTrialEnds() : int {
+        return (int) now()->diff($this->trial_ends_at)->format('%d');
+    }
 }

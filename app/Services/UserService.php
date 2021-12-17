@@ -15,7 +15,7 @@ class UserService {
         return User::Create([
             'name' => $userData->name,
             'email' => $userData->email,
-            'password' => $userData->password,
+            'password' => bcrypt($userData->password),
             'account_type' => $accountType
         ]);
     }
