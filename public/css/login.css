@@ -32,7 +32,7 @@ body {
       height: 200px; } }
   
   .half .contents {
-    background: #f6f7fc; }
+    background: white; }
   
   .half .contents, .half .bg {
     width: 50%; }
@@ -103,11 +103,11 @@ body {
     background: #ccc; }
   
   .control input:checked ~ .control__indicator {
-    background: #fb771a; }
+    background: #090B3D; }
   
   .control:hover input:not([disabled]):checked ~ .control__indicator,
   .control input:checked:focus ~ .control__indicator {
-    background: #fb8633; }
+    background: #090B3D; }
   
   .control input:disabled ~ .control__indicator {
     background: #e6e6e6;
@@ -145,4 +145,9 @@ body {
 
 label {
   margin-bottom: 10px;
+}
+
+#loginButton {
+  background-color: #5b5e9c;
+  border-color: #5b5e9c;
 }

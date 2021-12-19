@@ -23,14 +23,16 @@ class CustomerRegisterController extends Controller
             trialDays: 14
         );
 
-        return $user;
+        auth()->login($user);
+
+        return redirect()->route('customer.dashboard.view');
     }
 
     public function show()
     {
         $user = new User;
 
-        return view('customer/register', [
+        return view('auth/register', [
             'intent' => $user->createSetupIntent()
         ]);
     }

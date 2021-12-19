@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html lang="eng">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('auth.templates.main')
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/login.css">
-
-        <title>Laravel</title>
-    
-    </head>
-    <body>
-        <div class="d-lg-flex half">
-            <div class="bg order-1 order-md-2" style="background-image: url('/img/laptop.jpg');"></div>
-            <div class="contents order-2 order-md-1">
-
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                <div class="col-md-7">
-                    <h3>Login to <strong>Colorlib</strong></h3>
-                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
-                    <form action="{{ route('auth.login.request') }}" method="post">
+@section('main')
+<h3>Login to <strong>rocketcontent.io</strong></h3>
+                    <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
+                    <form action="{{ route('auth.login.request') }}" method="post" class="mt-5">
                         @csrf
 
                         <div class="form-group first">
@@ -31,7 +11,7 @@
                             @error('email')
                                 <div>{{ $message }}</div>
                             @enderror
-                            <input type="text" class="form-control" placeholder="your-email@gmail.com" id="username" name="email">
+                            <input type="text" class="form-control border" placeholder="your-email@gmail.com" id="username" name="email">
                         </div>
 
                         <div class="form-group last mb-3 mt-3">
@@ -39,7 +19,7 @@
                             @error('password')
                                 <div>{{ $message }}</div>
                             @enderror
-                            <input type="password" class="form-control" placeholder="Your Password" id="password" name="password">
+                            <input type="password" class="form-control border" placeholder="Your Password" id="password" name="password">
                         </div>
                         
                         <div class="d-flex mb-5 align-items-center">
@@ -51,15 +31,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                            <input type="submit" id="loginButton" value="Log In" class="btn btn-block btn-primary">
                         </div>
                     </form>
-                </div>
-                </div>
-            </div>
-            </div>
-
-            
-        </div>
-    </body>
-</html>
+@endsection
