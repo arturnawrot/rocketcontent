@@ -18,6 +18,7 @@ class CreateContentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('title');
             $table->mediumText('description');
+            $table->integer('word_count');
             $table->string('status');
             $table->timestamp('deadline');
             $table->timestamps();

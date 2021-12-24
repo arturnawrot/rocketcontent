@@ -7,6 +7,8 @@
 
     <input type="text" name="description" placeholder="description">
 
+    <input type="number" name="word_count">
+
     <input type="date" name="deadline">
 
     <!-- <input type="text" name="options[]">

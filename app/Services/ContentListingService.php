@@ -14,6 +14,7 @@ class ContentListingService {
             $contentListing = auth()->user()->contentListings()->create([
                 'title' => $contentListingData->title,
                 'description' => $contentListingData->description,
+                'word_count' => $contentListingData->wordCount,
                 'deadline' => $contentListingData->deadline,
                 'status' => 'active'
             ]);

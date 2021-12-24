@@ -10,5 +10,7 @@ class ContentListingData extends DataTransferObject
 
     public string $description;
 
+    public int $wordCount;
+
     public string $deadline;
 }

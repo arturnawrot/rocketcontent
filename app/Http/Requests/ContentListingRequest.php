@@ -27,6 +27,7 @@ class ContentListingRequest extends FormRequest
         return [
             'title' => 'required|min:5|max:255|string',
             'description' => 'required|string|min:100|max:20000',
+            'word_count' => 'required|integer|min:50|max:30000',
             'deadline' => 'required|string'
         ];
     }
@@ -36,6 +37,7 @@ class ContentListingRequest extends FormRequest
         return new ContentListingData(
             title: $this->title,
             description: $this->description,
+            wordCount: $this->word_count,
             deadline: $this->deadline
         );
     }

@@ -15,6 +15,7 @@ class ContentListing extends Model
     protected $fillable = [
         'title',
         'description',
+        'word_count',
         'deadline',
         'status'
     ];
