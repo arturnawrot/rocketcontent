@@ -18,16 +18,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             
-            switch($accountType = Auth::user()->account_type) {
-                case 'CUSTOMER':
-                    $redirectViewName = 'customer.dashboard.view';
-                    break;
-                case 'ADMIN':
-                    $redirectViewName = 'admin.dashboard.view';
-                    break;
-            }
-
-            return redirect()->intended(route($redirectViewName));
+            return $this->redirectToHome();
         }
 
         return back()->withErrors([
@@ -44,5 +35,19 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    protected function redirectToHome()
+    {
+        switch($accountType = Auth::user()->account_type) {
+            case 'CUSTOMER':
+                $redirectViewName = 'customer.dashboard.view';
+                break;
+            case 'ADMIN':
+                $redirectViewName = 'admin.dashboard.view';
+                break;
+        }
+
+        return redirect()->intended(route($redirectViewName));
     }
 }
