@@ -24,7 +24,7 @@ class CreateHistoriesTable extends Migration
             // Which record from the table are we referencing
             $table->integer('reference_id')->unsigned();
 
-            $table->bigText('body');
+            $table->longText('body');
 
             $table->timestamp('created_at');
         });

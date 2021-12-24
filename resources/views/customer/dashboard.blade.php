@@ -9,3 +9,7 @@ Hi, {{ auth()->user()->name }}
 <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
+
+</br>
+
+<a href="{{ route('customer.content.request.view') }}">Request New Content</a>

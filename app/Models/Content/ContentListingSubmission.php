@@ -5,14 +5,13 @@ namespace App\Models\Content;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContentListingOption extends Model
+class ContentListingSubmission extends Model
 {
     use HasFactory;
 
-    protected $table = 'content_listing_options';
+    protected $table = 'content_listing_submissions';
 
     protected $fillable = [
-        'name',
-        'value',
+        'content'
     ];
 }

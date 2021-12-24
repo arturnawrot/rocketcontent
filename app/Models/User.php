@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use App\Helpers\StripeConfig;
 use App\Models\Traits\Presentable;
+use App\Models\Content\ContentListing;
 
 class User extends Authenticatable
 {
@@ -66,5 +67,9 @@ class User extends Authenticatable
 
     public function daysBeforeTrialEnds() : int {
         return (int) now()->diff($this->trial_ends_at)->format('%d');
+    }
+
+    public function contentListings() {
+        return $this->hasMany(ContentListing::class);
     }
 }

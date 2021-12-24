@@ -29,7 +29,11 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 // START: Customer only area.
 Route::middleware(['auth:CUSTOMER'])->group(function () {
 
-    Route::view('/customer/home', 'customer.dashboard')->name('customer.dashboard.view');
+    Route::view('/home', 'customer.dashboard')->name('customer.dashboard.view');
+
+    Route::get('/content/new', [App\Http\Controllers\Customer\ContentRequestController::class, 'showRequestForm'])->name('customer.content.request.view');
+
+    Route::post('/content/new', [App\Http\Controllers\Customer\ContentRequestController::class, 'submitRequest'])->name('customer.content.request.request');
 
 });
 // END: Customer only area.

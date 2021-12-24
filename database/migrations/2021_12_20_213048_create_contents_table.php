@@ -16,6 +16,7 @@ class CreateContentsTable extends Migration
         Schema::create('content_listings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->text('title');
             $table->mediumText('description');
             $table->string('status');
             $table->timestamp('deadline');
@@ -34,7 +35,7 @@ class CreateContentsTable extends Migration
             $table->string('status');
         });
 
-        Schema::create('writer_has_submissions', function (Blueprint $table) {
+        Schema::create('content_listing_submissions', function (Blueprint $table) {
             $table->unsignedBigInteger('content_listing_id');
             $table->unsignedBigInteger('user_id');
             $table->longText('content');

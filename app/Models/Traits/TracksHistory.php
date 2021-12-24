@@ -2,7 +2,9 @@
 
 // Credit: https://medium.com/sammich-shop/simple-record-history-tracking-with-laravel-observers-48a2e3c5698b
 
-trait TracksHistoryTrait
+namespace App\Models\Traits;
+
+trait TracksHistory
 {
     protected function track(Model $model, callable $func = null, $table = null, $id = null)
     {

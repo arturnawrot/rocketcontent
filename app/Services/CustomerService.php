@@ -6,6 +6,7 @@ use App\Models\User;
 use App\DataTransferObject\CustomerData;
 use App\Helpers\StripeConfig;
 use App\Factories\PriceNameFactory;
+use App\Expections\BusinessExpection;
 
 class CustomerService {
 
@@ -40,12 +41,14 @@ class CustomerService {
         return $user;
     }
     
-    public function expandTrialTime(User $user, int $days) : void {
+    public function expandTrialTime(User $user, int $days) : User {
         if($days <= 0) {
-            return;
+            throw new BusinessExpection("The 'days' parameter cannot be zero or lower.");
         }
 
         $user->trial_ends_at = now()->addDays($days + (int) $user->daysBeforeTrialEnds());
         $user->save();
+
+        return $user;
     }
 }
