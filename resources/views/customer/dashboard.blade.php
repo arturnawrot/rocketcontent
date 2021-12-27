@@ -1,8 +1,13 @@
-Hi, {{ auth()->user()->name }}
+@extends('customer.templates.main')
 
-</br>
+@section('content')
 
-<a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+<h1>Dashboard</h1>
+
+@endsection
+
+
+<!-- <a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     Logout
 </a>
 
@@ -12,4 +17,4 @@ Hi, {{ auth()->user()->name }}
 
 </br>
 
-<a href="{{ route('customer.content.request.view') }}">Request New Content</a>
+<a href="{{ route('customer.content.request.view') }}">Request New Content</a> -->

@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 
 class LoginController extends Controller
 {
     public function authenticate(Request $request)
-    {
+    {        
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -17,8 +18,10 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            $home = RouteServiceProvider::getUserHome();
             
-            return $this->redirectToHome();
+            return redirect()->intended($home);
         }
 
         return back()->withErrors([
@@ -35,19 +38,5 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
-    }
-
-    protected function redirectToHome()
-    {
-        switch($accountType = Auth::user()->account_type) {
-            case 'CUSTOMER':
-                $redirectViewName = 'customer.dashboard.view';
-                break;
-            case 'ADMIN':
-                $redirectViewName = 'admin.dashboard.view';
-                break;
-        }
-
-        return redirect()->intended(route($redirectViewName));
     }
 }

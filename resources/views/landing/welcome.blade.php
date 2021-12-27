@@ -24,5 +24,7 @@
         <div class="mt-5">
             @include('landing/landing-page-sections.3-section')
         </div>
+
+        <script src="/js/bootstrap.min.js"></script>
     </body>
 </html>

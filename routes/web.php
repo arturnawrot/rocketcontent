@@ -6,13 +6,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'landing/welcome');
 
-Route::view('/login', 'auth.login')->name('auth.login.view');
+Route::middleware(['guest'])->group(function () {
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('auth.login.request');
+    Route::view('/login', 'auth.login')->name('auth.login.view');
 
-Route::get('/register', [App\Http\Controllers\Customer\CustomerRegisterController::class, 'show'])->name('customer.register.view');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('auth.login.request');
 
-Route::post('/register', [App\Http\Controllers\Customer\CustomerRegisterController::class, 'register'])->name('customer.register.request');
+    Route::get('/register', [App\Http\Controllers\Customer\CustomerRegisterController::class, 'show'])->name('customer.register.view');
+
+    Route::post('/register', [App\Http\Controllers\Customer\CustomerRegisterController::class, 'register'])->name('customer.register.request');
+
+});
+
 
 // END: No authentication required area.
 

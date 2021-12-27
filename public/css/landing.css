@@ -73,7 +73,8 @@ h1 {
 }
 
 .free-trial-button {
-    background-color: #FF0000 !important;
+    /* Used to be #FF0000 */
+    background-color: #FF451D !important;
 }
 
 .button {

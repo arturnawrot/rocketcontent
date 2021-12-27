@@ -24,17 +24,4 @@ class ContentListingService {
             return $contentListing;
         });
     }
-
-    public function addWriter(ContentListing $contentListing) : void {
-        $contentListing->addWriter();
-    }
-
-    public function removeWrtier(ContentListing $contentListing) : void {
-        $contentListing->removeWriter();
-    }
-
-    public function replaceWrtier(ContentListing $contentListing) : void {
-        $this->removeWriter($contentListing);
-        $this->addWrtier($contentListing);
-    }
 }
