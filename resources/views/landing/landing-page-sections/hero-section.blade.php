@@ -12,7 +12,7 @@
             </h1>
 
             <p class="lead text-center text-md-start text-muted mb-6 mb-lg-8 mt-4" id="hero-description">
-                Donec volutpat justo eu lectus tristique porta. Praesent laoreet vehicula magna.
+                Donec volutpat justo eu lectus tristique porta. <br id="hero-line-break"> Praesent laoreet vehicula magna.
             </p>
 
             <div class="pt-4">

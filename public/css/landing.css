@@ -45,7 +45,7 @@ h1 {
 }
 
 .container {
-    max-width: 1180px;
+    max-width: 1210px;
     padding: 0 50px;
 }
 
@@ -145,4 +145,10 @@ p {
 
 .purple {
     color: #3A005E;
+}
+
+@media only screen and (max-device-width: 765px) {
+    #hero-line-break {
+        display: none;
+    } 
 }
