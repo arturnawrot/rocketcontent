@@ -1,8 +1,6 @@
 <nav id="sidebarMenu" class="navbar-collapse collapse col-md-3 col-lg-2 d-md-block bg-light sidebar">
       <div class="position-sticky pt-3 text-center text-md-start">
-        <ul class="nav flex-column">
-
-          <img src="/svg/logo.svg" id="logo" class="mx-auto d-block px-2 pt-2"/>
+        <ul class="pt-md-3 nav flex-column">
 
           <div class="nav-item mx-auto d-block mt-5">
             <img src="/img/example-avatar.png" id="avatar">
@@ -38,6 +36,8 @@
               <button id="request-content-button" type="button">Request new content</button>
             </div>
           </li>
+
+          <img src="/svg/logo.svg" id="logo" class="mx-auto d-block px-3"/>
 
         </ul>
 
