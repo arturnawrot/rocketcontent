@@ -152,3 +152,11 @@ p {
         display: none;
     } 
 }
+
+#logo {
+    max-width: 200px;
+}
+
+img {
+    user-select: none;
+}
