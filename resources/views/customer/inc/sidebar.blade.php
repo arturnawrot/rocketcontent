@@ -1,4 +1,4 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
       <div class="position-sticky pt-3 text-center text-md-start">
         <ul class="nav flex-column">
 
@@ -20,7 +20,7 @@
           </div>
           
 
-          <!-- <li class="nav-item mt-4">
+          <li class="nav-item mt-4">
             <a class="nav-link active" aria-current="page" href="#">
               <span data-feather="home"></span>
               Dashboard
@@ -31,7 +31,13 @@
               <span data-feather="file"></span>
               Orders
             </a>
-          </li> -->
+          </li>
+
+          <li class="mx-auto d-block" id="sidebar-elements-that-show-up-on-mobile">
+            <div class="d-flex">
+              <button id="request-content-button" type="button">Request new content</button>
+            </div>
+          </li>
 
         </ul>
 

@@ -165,3 +165,28 @@ img {
 #collapse-button {
   z-index: 2;
 }
+@media only screen and (max-device-width: 767px) {
+  #sidebar-elements-that-show-up-on-mobile {
+    display: block;
+    visibility: visible;
+  }
+
+  #navbar-elements-that-disappear-on-mobile {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #sidebar-elements-that-show-up-on-mobile {
+    display: none;
+    visibility: hidden;
+  }
+
+  #navbar-elements-that-disappear-on-mobile {
+    display: block;
+    visibility: visible;
+  }
+}
+
+

@@ -7,7 +7,7 @@
       </button>
     </div>
 
-    <div class="d-flex">
+    <div id="navbar-elements-that-disappear-on-mobile" class="d-flex">
       <button id="request-content-button" type="button">Request new content</button>
     </div>
   <!-- <img src="/svg/logo.svg" class="navbar-brand col-md-3 col-lg-2 me-0 px-3"/> -->
