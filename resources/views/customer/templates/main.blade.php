@@ -12,16 +12,16 @@
 
         <div class="container-fluid">
             <div class="row">
-
+                
                 @include('customer.inc.sidebar')
 
-                <main>
-                    <div class="col-md-9 ms-sm-auto col-lg-10">
+                <main class="px-md-5">
+                    <div class="col-md-9 ms-sm-auto col-lg-10 pt-md-5 px-4">
                         @include('customer.inc.navbar')
 
                     </div>
 
-                    <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-md-3 px-md-3">
+                    <div class="col-md-9 ms-sm-auto col-lg-10 pt-md-4 px-4">
                         @yield('content')
                     </div>
                 </main>

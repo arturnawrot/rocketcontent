@@ -36,18 +36,10 @@ h1 {
   vertical-align: text-bottom;
 }
 
-/*
-  * Sidebar
-  */
-
 .sidebar {
   position: fixed;
   top: 0;
-  /* rtl:raw:
-  right: 0;
-  */
   bottom: 0;
-  /* rtl:remove */
   left: 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   padding: 14px 0 0;
@@ -59,7 +51,7 @@ h1 {
   height: calc(100vh - 48px);
   padding-top: .5rem;
   overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  overflow-y: auto;
 }
 
 .sidebar .nav-link {
@@ -85,10 +77,6 @@ h1 {
   font-size: .75rem;
   text-transform: uppercase;
 }
-
-/*
-  * Navbar
-  */
 
 .navbar-brand {
   padding-top: .75rem;
@@ -143,8 +131,37 @@ img {
   .sidebar {
     padding: 48px 0 0;
   }
+}
 
-  /* #logo {
-    max-width: 50px !important;
-  } */
+#name {
+  font-weight: 700;
+}
+
+#page-title {
+  font-size: 2em;
+}
+
+#trial-message {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+#request-content-button {
+  background-color: #8C30F5;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+
+  box-shadow: 0px 6px 15px rgba(89, 89, 89, 0.25);
+  border-radius: 25px;
+  border: none;
+  padding: 14px 18px;
+}
+
+#sidebarMenu {
+  z-index: 1;
+}
+
+#collapse-button {
+  z-index: 2;
 }

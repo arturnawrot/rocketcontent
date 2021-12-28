@@ -8,12 +8,19 @@
             <img src="/img/example-avatar.png" id="avatar">
           </div>
 
-          <div class="nav-item mx-auto d-block mt-3">
-            <span>John Smith</span>
+          <div class="nav-item text-center mt-3">
+            <span id="name">John Smith</span>
+          </div>
+
+          <div class="nav-item text-center mt-3">
+            <span id="trial-message">
+                Worry-Free Trial: <br/>
+                3 Days Remaining
+            </span>
           </div>
           
 
-          <li class="nav-item mt-4">
+          <!-- <li class="nav-item mt-4">
             <a class="nav-link active" aria-current="page" href="#">
               <span data-feather="home"></span>
               Dashboard
@@ -24,31 +31,8 @@
               <span data-feather="file"></span>
               Orders
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
-            </a>
-          </li>
+          </li> -->
+
         </ul>
 
       </div>
