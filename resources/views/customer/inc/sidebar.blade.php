@@ -1,6 +1,11 @@
 <nav id="sidebarMenu" class="navbar-collapse collapse col-md-3 col-lg-2 d-md-block bg-light sidebar">
-      <div class="position-sticky pt-3 text-center text-md-start">
-        <ul class="pt-md-3 nav flex-column">
+      <div class="sidebar-sticky text-center text-md-start">
+        <ul class="nav flex-column">
+          
+          <div class="d-block mx-auto mt-5">
+            <img src="/svg/logo.svg" id="logo"/>
+          </div>
+
 
           <div class="nav-item mx-auto d-block mt-5">
             <img src="/img/example-avatar.png" id="avatar">
@@ -16,30 +21,45 @@
                 3 Days Remaining
             </span>
           </div>
-          
 
-          <li class="nav-item mt-4">
-            <a class="nav-link active" aria-current="page" href="#">
-              <span data-feather="home"></span>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Orders
-            </a>
-          </li>
 
-          <li class="mx-auto d-block" id="sidebar-elements-that-show-up-on-mobile">
-            <div class="d-flex">
+          <li id="sidebar-elements-that-show-up-on-mobile">
+            <div class="m-0 my-sm-4 mx-auto d-block">
               <button id="request-content-button" type="button">Request new content</button>
             </div>
           </li>
+          
 
-          <img src="/svg/logo.svg" id="logo" class="mx-auto d-block px-3"/>
+          <div id="sidebar-navigation-links" class="mt-md-3 d-block mx-auto">
+              <li class="nav-item mt-md-4">
+                <a class="nav-link active" aria-current="page" href="#">
+                  <span data-feather="home"></span>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Content
+                </a>
+              </li>              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Resources
+                </a>
+              </li>              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Information
+                </a>
+              </li>              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Orders
+                </a>
+              </li>
+          </div>
 
         </ul>
-
       </div>
-    </nav>
+</nav>
