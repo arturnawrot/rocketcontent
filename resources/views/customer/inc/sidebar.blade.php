@@ -2,7 +2,7 @@
       <div class="sidebar-sticky text-center text-md-start">
         <ul class="nav flex-column">
           
-          <div class="d-block mx-auto mt-5">
+          <div class="d-block mx-auto mt-4">
             <img src="/svg/logo.svg" id="logo"/>
           </div>
 

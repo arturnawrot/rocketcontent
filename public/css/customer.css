@@ -132,12 +132,12 @@ img {
 }
 
 #page-title {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 #trial-message {
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 #request-content-button {
@@ -195,3 +195,18 @@ img {
   font-weight: 600;
 }
 
+#card-title {
+  padding-bottom: 10px;
+  font-weight: 800;
+  font-size: 1.2em;
+}
+
+.card-body {
+  padding: 30px;
+}
+
+.card {
+  border-radius: 16px;
+  box-shadow: 2px 3px 11px 0px rgb(140 48 245 / 9%);
+  border-color: #f4eaff;
+}
