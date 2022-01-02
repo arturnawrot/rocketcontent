@@ -8,7 +8,7 @@ Route::view('/', 'landing/welcome');
 
 Route::middleware(['guest'])->group(function () {
 
-    Route::view('/login', 'auth.login')->name('auth.login.view');
+    Route::view('/login', 'auth.login')->name('login');
 
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('auth.login.request');
 

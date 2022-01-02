@@ -53,6 +53,6 @@ class CreateContentsTable extends Migration
         Schema::dropIfExists('content_listings');
         Schema::dropIfExists('content_listing_options');
         Schema::dropIfExists('content_listing_has_a_writer');
-        Schema::dropIfExists('writer_has_submissions');
+        Schema::dropIfExists('content_listing_submissions');
     }
 }

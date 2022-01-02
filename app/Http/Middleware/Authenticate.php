@@ -13,7 +13,7 @@ class Authenticate extends Middleware
             return $next($request);
         }
 
-        return redirect(route('auth.login.view'));
+        return redirect(route('login'));
     }
 
     /**
@@ -25,7 +25,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('auth.login.view');
+            return route('login');
         }
     }
 }

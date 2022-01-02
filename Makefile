@@ -6,6 +6,7 @@ file-permission:
 	chmod 775 bootstrap/cache/
 
 migration:
+	php artisan migrate:fresh
 	php artisan migrate:reset
 	php artisan migrate --seed
 

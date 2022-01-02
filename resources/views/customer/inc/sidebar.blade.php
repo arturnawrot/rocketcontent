@@ -24,7 +24,7 @@
 
 
           <li id="sidebar-elements-that-show-up-on-mobile">
-            <div class="m-0 my-sm-4 mx-auto d-block">
+            <div class="m-0 my-4 mx-auto d-block">
               <button id="request-content-button" type="button">Request new content</button>
             </div>
           </li>

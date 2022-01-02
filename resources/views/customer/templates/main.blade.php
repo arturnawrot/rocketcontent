@@ -21,7 +21,7 @@
 
                     </div>
 
-                    <div class="col-md-9 ms-sm-auto col-lg-10 pt-md-5 px-4">
+                    <div class="col-md-9 ms-sm-auto col-lg-10 pt-5 px-4">
                         @yield('content')
                     </div>
                 </main>
