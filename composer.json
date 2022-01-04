@@ -12,7 +12,7 @@
         "laravel/cashier": "^13.6",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "lasserafn/php-initial-avatar-generator": "^4.2",
+        "laravolt/avatar": "^4.1",
         "spatie/data-transfer-object": "^3.7"
     },
     "require-dev": {

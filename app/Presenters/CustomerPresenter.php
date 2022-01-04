@@ -4,7 +4,13 @@ namespace App\Presenters;
 
 trait CustomerPresenter {
     public function daysBeforeTrialEnds() : int {
-        return (int) now()->diff($this->trial_ends_at)->format('%r%a');
+        $days = (int) now()->diff($this->trial_ends_at)->format('%r%a');
+
+        if(!$this->entity->isOnTrial()) {
+            return 0;
+        }
+
+        return $days + 1;
     }
 
     public function timeBeforeTrialEnds() : string {

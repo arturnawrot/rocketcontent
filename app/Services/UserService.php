@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\DataTransferObject\UserData;
 use App\Expection\BusinessExpection;
+use App\Events\UserCreated;
 
 class UserService {
 
@@ -13,12 +14,16 @@ class UserService {
             throw new BusinessExpection("$accountType - Account Type not supported");
         }
 
-        return User::Create([
+        $user = User::Create([
             'name' => $userData->name,
             'email' => $userData->email,
             'password' => bcrypt($userData->password),
             'account_type' => $accountType
         ]);
+        
+        UserCreated::dispatch($user);
+
+        return $user;
     }
     
 }

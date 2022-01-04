@@ -15,12 +15,14 @@
             <span id="name">{{ auth()->user()->name }}</span>
           </div>
 
+          @if(auth()->user()->isOnTrial())
           <div class="nav-item text-center mt-3">
             <span id="trial-message">
                 Worry-Free Trial: <br/>
                 {{ auth()->user()->present()->daysBeforeTrialEnds() }} Days Remaining
             </span>
           </div>
+          @endif
 
 
           <li id="sidebar-elements-that-show-up-on-mobile">

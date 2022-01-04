@@ -9,7 +9,13 @@ use App\Repositories\UserRepository;
 class CustomerController extends Controller
 {
     public function index() {
-        return view('admin.customers.index', ['customers' => UserRepository::getCustomers()]);
+        $service = new \App\Services\GenerateAvatar();
+
+        $avatar = $service->createAvatar(auth()->user());
+
+        return $avatar;
+
+        // return view('admin.customers.index', ['customers' => UserRepository::getCustomers()]);
     }
 
     public function update(Request $request) {
