@@ -35,6 +35,8 @@ RUN apk upgrade --update-cache --available && \
 apk add openssl && \
 rm -rf /var/cache/apk/*
 
+RUN apk add --no-cache libpng libpng-dev && docker-php-ext-install gd && apk del libpng-dev
+
 ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 ADD ./php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini

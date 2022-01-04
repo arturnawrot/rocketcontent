@@ -12,13 +12,13 @@
           </div>
 
           <div class="nav-item text-center mt-3">
-            <span id="name">John Smith</span>
+            <span id="name">{{ auth()->user()->name }}</span>
           </div>
 
           <div class="nav-item text-center mt-3">
             <span id="trial-message">
                 Worry-Free Trial: <br/>
-                3 Days Remaining
+                {{ auth()->user()->present()->daysBeforeTrialEnds() }} Days Remaining
             </span>
           </div>
 
