@@ -35,10 +35,7 @@
   </div>
 </div>
 
-@endsection
-
-
-<!-- <a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+<a href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     Logout
 </a>
 
@@ -46,6 +43,9 @@
     @csrf
 </form>
 
-</br>
+@endsection
 
-<a href="{{ route('customer.content.request.view') }}">Request New Content</a> -->
+
+
+
+<!-- <a href="{{ route('customer.content.request.view') }}">Request New Content</a> -->
