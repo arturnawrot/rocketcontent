@@ -3,6 +3,7 @@ install-dev: file-permission dependency-install generate-app-key migration optim
 
 file-permission:
 	chmod -R 775 storage
+	chmod o+w ./storage/ -R
 	chmod 775 bootstrap/cache/
 
 migration:

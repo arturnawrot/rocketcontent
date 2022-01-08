@@ -24,7 +24,11 @@ class CustomerService {
         $user = $this->userService->create($customerData->userData, 'CUSTOMER');
         $user->createAsStripeCustomer();
 
-        $this->subscriptionService->updatePaymentMethod($user, $customerData->paymentIntent);
+        try {
+            $this->subscriptionService->updatePaymentMethod($user, $customerData->paymentIntent);
+        } catch (\Stripe\Error\Base $e) {
+            
+        }
 
         $priceName = PriceNameFactory::get($customerData->subscriptionData->recurringType);
 

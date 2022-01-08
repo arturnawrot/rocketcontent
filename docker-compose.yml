@@ -49,5 +49,14 @@ services:
     networks:
       - laravel
 
+  selenium:
+    image: 'selenium/standalone-chrome:3.11.0-antimony'
+    depends_on:
+      - php
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - laravel
+
 networks:
   laravel:
