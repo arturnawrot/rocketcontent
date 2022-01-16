@@ -2,7 +2,6 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Stripe\Exception\InvalidRequestException;
@@ -50,8 +49,6 @@ class CustomerRegistrationTest extends DuskTestCase
                     ->assertSee('14 Days Remaining');
         });
     }
-
-    // public function testUserIsDeletedOnFailedPaymentMethodAdditionDuringRegistration()
 
     protected function tearDown(): void
     {

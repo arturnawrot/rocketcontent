@@ -8,7 +8,9 @@ trait CustomerPresenter {
             return 0;
         }
 
-        return (int) now()->diff($this->trial_ends_at)->format('%r%a');
+        $dateDifference = strtotime($this->trial_ends_at) - strtotime(now());
+
+        return round($dateDifference / (60 * 60 * 24));
     }
 
     public function timeBeforeTrialEnds() : string {

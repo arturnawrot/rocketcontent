@@ -6,6 +6,7 @@ use App\Models\User;
 use App\DataTransferObject\UserData;
 use App\Expection\BusinessExpection;
 use App\Events\UserCreated;
+use App\Events\UserDeleting;
 
 class UserService {
 
@@ -24,6 +25,12 @@ class UserService {
         UserCreated::dispatch($user);
 
         return $user;
+    }
+
+    public function delete(User $user) {
+        UserDeleting::dispatch($user);
+
+        $user->delete();
     }
     
 }
