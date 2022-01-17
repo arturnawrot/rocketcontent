@@ -20,3 +20,4 @@ yarn-error.log
 *.cache
 storage/mysql
 /public/plain-free-bootstrap-admin-template-main
+/public/avatars/*
