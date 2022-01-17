@@ -30,6 +30,17 @@ return [
 
     'disks' => [
 
+        'avatars' => [
+            'driver' => 'local',
+            'root' => public_path('avatars'),
+            'url' => env('APP_URL').'/avatars',
+        ],
+
+        'fixtures' => [
+            'driver' => 'local',
+            'root' => storage_path('app/fixtures'),
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

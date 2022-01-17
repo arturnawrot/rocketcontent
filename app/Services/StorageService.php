@@ -5,33 +5,23 @@ namespace App\Services;
 use Illuminate\Support\Facades\Storage;
 
 class StorageService {
-    private function getLocalDriver(string $type) {
-        switch($type) {
-            case 'avatars':
-                $root = public_path('avatars');
-                break;
-            case 'storage':
-                $root = storage_path('app');
-                break;
-            default:
-                throw new \Exception("{$type} is not associated with any of available local drivers.");
-        }
-
-        return Storage::build([
-            'driver' => 'local',
-            'root' => $root
-        ]);
+    private static function getLocalDriver(string $type) {
+        return Storage::disk($type);
     }
 
     public function getFile(string $driverType, string $fileName) {
-        return $this->getLocalDriver($driverType)->get($fileName);
+        return self::getLocalDriver($driverType)->get($fileName);
     }
 
     public function deleteFile(string $driverType, string $fileName) {
-        return $this->getLocalDriver($driverType)->delete($fileName);
+        return self::getLocalDriver($driverType)->delete($fileName);
     }
 
     public function putFile(string $driverType, string $fileName, $content) {
-        return $this->getLocalDriver($driverType)->put($fileName, $content);
+        return self::getLocalDriver($driverType)->put($fileName, $content);
+    }
+
+    public static function getFileUrl(string $driverType, string $fileName) {
+        return self::getLocalDriver($driverType)->url($fileName);
     }
 }

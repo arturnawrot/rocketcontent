@@ -8,7 +8,7 @@
 
 
           <div class="nav-item mx-auto d-block mt-5">
-            <img src="/img/example-avatar.png" id="avatar">
+            <img src="{{ auth()->user()->getAvatarUrl() }}" id="avatar">
           </div>
 
           <div class="nav-item text-center mt-3">

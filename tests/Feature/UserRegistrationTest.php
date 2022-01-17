@@ -25,7 +25,7 @@ class UserRegistrationTest extends TestCase
         
         $storageService = $this->app->make('App\Services\StorageService');
 
-        $expectedSvg = $storageService->getFile('storage', 'fixtures/exampleAvatar.svg');
+        $expectedSvg = $storageService->getFile('fixtures', 'exampleAvatar.svg');
         $userSvg = $storageService->getFile('avatars', $user->avatar_path);
 
         $this->assertEquals($userSvg, $expectedSvg);

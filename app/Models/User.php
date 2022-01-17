@@ -10,6 +10,7 @@ use Laravel\Cashier\Billable;
 use App\Helpers\StripeConfig;
 use App\Models\Traits\Presentable;
 use App\Models\Content\ContentListing;
+use App\Services\StorageService;
 
 class User extends Authenticatable
 {
@@ -72,5 +73,9 @@ class User extends Authenticatable
 
     public function contentListings() {
         return $this->hasMany(ContentListing::class);
+    }
+
+    public function getAvatarUrl() {
+        return StorageService::getFileUrl('avatars', $this->avatar_path);
     }
 }
