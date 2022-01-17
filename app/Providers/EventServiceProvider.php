@@ -23,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\GenerateUserAvatar::class,
         ],
 
+        \App\Events\UserDeleting::class => [
+            \App\Listeners\DeleteUserAvatar::class,
+        ],
     ];
 
     /**

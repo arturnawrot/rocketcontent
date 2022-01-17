@@ -26,4 +26,12 @@ class StorageService {
     public function getFile(string $driverType, string $fileName) {
         return $this->getLocalDriver($driverType)->get($fileName);
     }
+
+    public function deleteFile(string $driverType, string $fileName) {
+        return $this->getLocalDriver($driverType)->delete($fileName);
+    }
+
+    public function putFile(string $driverType, string $fileName, $content) {
+        return $this->getLocalDriver($driverType)->put($fileName, $content);
+    }
 }
