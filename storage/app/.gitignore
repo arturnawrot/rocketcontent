@@ -2,5 +2,5 @@
 !public/
 !.gitignore
 
-!app/fixtures
-!app/fixtures/*
+!fixtures
+!fixtures/*
