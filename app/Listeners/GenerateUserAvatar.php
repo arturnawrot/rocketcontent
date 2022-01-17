@@ -33,7 +33,7 @@ class GenerateUserAvatar
     public function handle(UserCreated $event)
     {
         $user = $event->user;
-
+        
         $avatarSvg = $this->generateAvatarService->createAvatar($user);
 
         $disk = Storage::build([
@@ -43,9 +43,9 @@ class GenerateUserAvatar
         
         $randomStr = Str::random() . '.svg';
 
-        $path = $disk->put($randomStr, $avatarSvg);
+        $disk->put($randomStr, $avatarSvg);
 
-        $user->avatar_path = $path;
+        $user->avatar_path = $randomStr;
         $user->save();
     }
 }

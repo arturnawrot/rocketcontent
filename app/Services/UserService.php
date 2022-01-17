@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Services\Contracts\AbstractEntityService;
 use App\DataTransferObject\UserData;
-use App\Expection\BusinessExpection;
+use App\Expections\BusinessExpection;
 use App\Events\UserCreated;
 use App\Events\UserDeleting;
+use App\Models\User;
 
-class UserService {
+class UserService extends AbstractEntityService {
 
-    public function create(UserData $userData, $accountType) : User {
+    public function create(UserData $userData, string $accountType) : User {
         if(!in_array($accountType, User::ACCOUNT_TYPES)) {
             throw new BusinessExpection("$accountType - Account Type not supported");
         }
@@ -21,7 +22,7 @@ class UserService {
             'password' => bcrypt($userData->password),
             'account_type' => $accountType
         ]);
-        
+
         UserCreated::dispatch($user);
 
         return $user;
@@ -32,5 +33,4 @@ class UserService {
 
         $user->delete();
     }
-    
 }

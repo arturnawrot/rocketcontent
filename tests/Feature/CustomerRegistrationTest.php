@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\Process\Process;
 use App\Model\User;
@@ -31,19 +30,19 @@ class CustomerRegistrationTest extends TestCase
     }
 
     /** @test */
-    public function throws_an_error_on_invalid_payment()
-    {
-        $response = $this->post(route('customer.register.request'), [
-            'name' => 'John Smith',
-            'email' => 'john@gmail.com',
-            'password' => 'foobar',
-            'payment_method' => 'some_invalid_payment_intent',
-            'recurring_type' => 'monthly',
-            'wordCount' => 4000
-        ]);
+    // public function throws_an_error_on_invalid_payment()
+    // {
+    //     $response = $this->post(route('customer.register.request'), [
+    //         'name' => 'John Smith',
+    //         'email' => 'john@gmail.com',
+    //         'password' => 'foobar',
+    //         'payment_method' => 'some_invalid_payment_intent',
+    //         'recurring_type' => 'monthly',
+    //         'wordCount' => 4000
+    //     ]);
 
-        // $response->assertStatus(200);
-    }
+    //     $response->assertStatus(200);
+    // }
 
     protected function tearDown(): void
     {

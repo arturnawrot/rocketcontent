@@ -30,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar_path',
         'account_type',
         'trial_ends_at',
     ];

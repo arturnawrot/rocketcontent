@@ -98,6 +98,9 @@ return [
     // Available theme attributes are:
     // shape, chars, backgrounds, foregrounds, fonts, fontSize, width, height, ascii, uppercase, and border.
     'themes' => [
+        'testing' => [
+            'backgrounds' => ['#FF9800']
+        ],
         'grayscale-light' => [
             'backgrounds' => ['#edf2f7', '#e2e8f0', '#cbd5e0'],
             'foregrounds' => ['#a0aec0'],

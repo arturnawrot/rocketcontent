@@ -19,8 +19,8 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         
-        App\Events\UserCreated::class => [
-            App\Listeners\GenerateUserAvatar::class,
+        \App\Events\UserCreated::class => [
+            \App\Listeners\GenerateUserAvatar::class,
         ],
 
     ];
