@@ -3,14 +3,18 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
 use Symfony\Component\Process\Process;
-use App\Model\User;
+use App\Models\User;
 use Tests\TestCase;
 use Stripe\Customer;
 use Stripe\Stripe;
+use App\Events\UserCreated;
 
 class CustomerRegistrationTest extends TestCase
 {
+
+    protected $user;
 
     /**
      * @var Process
@@ -28,26 +32,90 @@ class CustomerRegistrationTest extends TestCase
 
         Stripe::setApiKey($secret);
     }
+    
+    /** @test */
+    public function registers()
+    {
+        Event::fake();
+
+        $data = \Stripe\Token::create([
+            'card' => [
+                "number" => "4242424242424242",
+                "exp_month" => 11,
+                "exp_year" => 2025,
+                "cvc" => "314",
+                "address_zip" => "30809"
+            ]
+        ]);
+
+        $token = $data['id'];
+
+        $response = $this->post(route('customer.register.request'), [
+            'name' => 'John Smith',
+            'email' => 'johnsmith@gmail.com',
+            'password' => '1234511',
+            'payment_method' => $token,
+            'recurring_type' => 'monthly',
+            'wordCount' => '4000'
+        ]);
+
+        $this->user = User::Where('email', 'johnsmith@gmail.com')->first();
+
+        $response->assertSee('John Smith');
+        $response->assertSee('14 Days Remaining');
+
+        Event::assertDispatched(UserCreated::class);
+    }
 
     /** @test */
-    // public function throws_an_error_on_invalid_payment()
-    // {
-    //     $response = $this->post(route('customer.register.request'), [
-    //         'name' => 'John Smith',
-    //         'email' => 'john@gmail.com',
-    //         'password' => 'foobar',
-    //         'payment_method' => 'some_invalid_payment_intent',
-    //         'recurring_type' => 'monthly',
-    //         'wordCount' => 4000
-    //     ]);
+    public function throws_an_error_on_invalid_payment_data()
+    {
+        Event::fake();
 
-    //     $response->assertStatus(200);
-    // }
+        // Completelly invalid, non-existing payment method.
+        $response = $this->post(route('customer.register.request'), [
+            'name' => 'John Smith',
+            'email' => 'john@gmail.com',
+            'password' => 'foobar',
+            'payment_method' => 'some_invalid_payment_intent',
+            'recurring_type' => 'monthly',
+            'wordCount' => 4000
+        ]);
+
+        $response->assertSessionHasErrors('invalid_request');
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'john@gmail.com'
+        ]);
+
+        // Invalid credit card
+
+        $response = $this->post(route('customer.register.request'), [
+            'name' => 'John Smith',
+            'email' => 'john@gmail.com',
+            'password' => 'foobar',
+            'payment_method' => 'some_invalid_payment_intent',
+            'recurring_type' => 'monthly',
+            'wordCount' => 4000
+        ]);
+
+        dd($sessions);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'john@gmail.com'
+        ]);
+
+        // @TODO assert more types of errors
+    }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $this->process->stop();
+
+        if($this->user instanceof User) {
+            $this->app->make(\App\Services\UserService::class)->delete($this->user);
+        }
+
+        parent::tearDown();
     }
 }

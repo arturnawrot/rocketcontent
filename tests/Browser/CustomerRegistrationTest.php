@@ -7,9 +7,11 @@ use Tests\DuskTestCase;
 use Stripe\Exception\InvalidRequestException;
 use Stripe\Customer;
 use Stripe\Stripe;
-use App\Model\User;
+use App\Models\User;
 use Symfony\Component\Process\Process;
 use Tests\Browser\Pages\RegistrationForm;
+use Illuminate\Support\Facades\Event;
+use App\Events\UserCreated;
 
 class CustomerRegistrationTest extends DuskTestCase
 {
@@ -47,22 +49,25 @@ class CustomerRegistrationTest extends DuskTestCase
                     ->enterValidCreditCard()
                     ->submit()
                     ->assertSee('14 Days Remaining');
+
+            $this->user = User::Where('email', 'johnsmith@gmail.com')->first();
         });
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $this->process->stop();
 
         if ($this->user instanceof User) {
             try {
                 (new Customer($this->user->stripe_id))->delete();
+                $this->app->make(\App\Services\UserService::class)->delete($this->user);
             } catch (InvalidRequestException $exception) {
             }
         }
 
         $this->user = null;
+
+        parent::tearDown();
     }
 }

@@ -1,3 +1,7 @@
 @if($errors->any())
-    {!! implode('', $errors->all('<div>:message</div>')) !!}
+    <div class="alert alert-danger" role="alert">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </div>
 @endif

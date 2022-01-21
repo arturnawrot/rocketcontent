@@ -8,17 +8,11 @@
 
                         <div class="form-group first">
                             <label for="username">Username</label>
-                            @error('email')
-                                <div>{{ $message }}</div>
-                            @enderror
                             <input type="text" class="form-control border" placeholder="your-email@gmail.com" id="username" name="email">
                         </div>
 
                         <div class="form-group last mb-3 mt-3">
                             <label for="password">Password</label>
-                            @error('password')
-                                <div>{{ $message }}</div>
-                            @enderror
                             <input type="password" class="form-control border" placeholder="Your Password" id="password" name="password">
                         </div>
                         

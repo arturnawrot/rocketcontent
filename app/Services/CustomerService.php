@@ -65,26 +65,33 @@ class CustomerService {
     // adding the payment method and charging them. In case if for some reason the payment fails
     // the user record must be removed from database, so the customer can fill out the same data
     // in the reigstration form during another attempt. Otherwise they will receive a duplicate entry error.
-    public function updatePaymentMethod(User $user, string $paymentIntent, bool $deleteUserOnFail = false) : void {
+    public function updatePaymentMethod(User $user, string $paymentIntent, bool $deleteUserOnFail = false) {
         try {
             $this->subscriptionService->updatePaymentMethod($user, $paymentIntent);
         } catch (\Stripe\Exception\ApiErrorException | \Stripe\Exception\InvalidRequestException $e) {
-            // Display a very generic error to the user, and maybe send
-            // yourself an email
+            
             if($deleteUserOnFail) {
                 $this->deleteCustomer($user);
             }
-        } catch(\Stripe\Exception\CardException $e) {
-            // Since it's a decline, \Stripe\Exception\CardException will be caught
-        } catch (\Stripe\Exception\RateLimitException $e) {
-            // Too many requests made to the API too quickly
-        } catch (\Stripe\Exception\AuthenticationException $e) {
-            // Authentication with Stripe's API failed
-            // (maybe you changed API keys recently)
-        } catch (\Stripe\Exception\ApiConnectionException $e) {
-            // Network communication with Stripe failed
+
+            return redirect()->back()->withErrors(['invalid_request' => 'There were some issues with processing your request to the payment processor. Please, try again later, or contact the customer service.']);
+        } 
+        
+        catch(\Stripe\Exception\CardException $e) {
+            return redirect()->back()->withErrors(['card_exception' => 'Your card was declined. Please, contact customer service.']);
+        } 
+        
+        // catch (\Stripe\Exception\RateLimitException $e) {
+        //     Too many requests made to the API too quickly
+        // } catch (\Stripe\Exception\AuthenticationException $e) {
+        //     Authentication with Stripe's API failed
+        //     (maybe you changed API keys recently)
+        // } 
+        
+        catch (\Stripe\Exception\ApiConnectionException $e) {
+            return redirect()->back()->withErrors(['api_connection' => 'There were some issues with processing your request to the payment processor. Please, try again later, or contact the customer service.']);
         } catch (Exception $e) {
-            // Something else happened, completely unrelated to Stripe
+            return redirect()->back()->withErrors(['exception' => 'There were some issues with processing your request to the payment processor. Please, try again later, or contact the customer service.']);
         }
     }
 
