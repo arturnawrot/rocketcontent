@@ -14,9 +14,8 @@ class LoginTest extends TestCase
     {
         Event::fake();
 
-        $userFactory = $this->app->make('App\Services\Factories\UserFactory');
+        $userFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
         $userFactory->override(array('password' => '1234511'));
-        $userFactory->setParameters(accountType: 'CUSTOMER');
 
         $user = $userFactory->create();
 

@@ -24,6 +24,7 @@
 
 body {
   font-family: 'Manrope';
+  background-color: #f7f7f730;
 }
 
 h1 {
@@ -41,7 +42,7 @@ h1 {
   top: 0;
   bottom: 0;
   left: 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  box-shadow: inset -1px 0 0 rgb(0 0 0 / 5%);
 }
 
 .sidebar-sticky {
@@ -132,7 +133,7 @@ img {
 }
 
 #page-title {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 #trial-message {
@@ -146,7 +147,7 @@ img {
   font-size: 14px;
   font-weight: 700;
 
-  box-shadow: 0px 6px 15px rgba(89, 89, 89, 0.25);
+  /* box-shadow: 0px 6px 15px rgba(89, 89, 89, 0.25); */
   border-radius: 25px;
   border: none;
   padding: 14px 18px;
@@ -207,6 +208,6 @@ img {
 
 .card {
   border-radius: 16px;
-  box-shadow: 2px 3px 11px 0px rgb(140 48 245 / 9%);
-  border-color: #f4eaff;
+  box-shadow: 2px 3px 11px 0px rgb(178 159 199 / 9%);
+  border-color: #f6eeff;
 }

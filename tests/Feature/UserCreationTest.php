@@ -34,9 +34,8 @@ class UserCreationTest extends TestCase
         
         Event::fake();
 
-        $userFactory = $this->app->make(\App\Services\Factories\UserFactory::class);
+        $userFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
         $userFactory->override(array('name' => 'John Smith'));
-        $userFactory->setParameters(accountType: 'CUSTOMER');
         
         $user = $userFactory->create();
 
@@ -57,8 +56,7 @@ class UserCreationTest extends TestCase
     {
         Event::fake();
 
-        $userFactory = $this->app->make(\App\Services\Factories\UserFactory::class);
-        $userFactory->setParameters(accountType: 'CUSTOMER');
+        $userFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
         
         $user = $userFactory->create();
 

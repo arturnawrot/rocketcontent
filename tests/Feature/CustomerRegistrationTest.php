@@ -99,8 +99,6 @@ class CustomerRegistrationTest extends TestCase
             'wordCount' => 4000
         ]);
 
-        dd($sessions);
-
         $this->assertDatabaseMissing('users', [
             'email' => 'john@gmail.com'
         ]);

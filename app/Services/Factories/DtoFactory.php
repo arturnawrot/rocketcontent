@@ -15,9 +15,9 @@ abstract class DtoFactory implements DtoFactoryInterface {
 
     protected $dtoObject;
 
-    public function __construct(Generator $faker) 
+    public function __construct() 
     {
-        $this->faker = $faker;
+        $this->faker = app(Generator::class);
 
         if(!method_exists($this, 'define')) {
             $clsName = get_class($this);
@@ -44,9 +44,11 @@ abstract class DtoFactory implements DtoFactoryInterface {
         throw new FactoryException("{$this->serviceClass} does not implement AbstractEntityService");
     }
 
-    public function setParameters(...$parameters)
+    public function addParameters(...$newParameters)
     {
-        $this->parameters = $parameters;
+        foreach($newParameters as $newParameterKey => $newParameterValue) {
+            $this->parameters[$newParameterKey] = $newParameterValue;
+        }
     }
 
     private function getParameters()
@@ -73,7 +75,7 @@ abstract class DtoFactory implements DtoFactoryInterface {
             }
         }
 
-        $this->getDto = $dtoObject;
+        $this->dtoObject = $dtoObject;
     }
 
     private function getDto()

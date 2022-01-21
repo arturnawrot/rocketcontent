@@ -14,7 +14,7 @@ class ContentListingRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->account_type == 'CUSTOMER';
+        return auth()->user()->account_type === 'CUSTOMER';
     }
 
     /**
@@ -28,7 +28,9 @@ class ContentListingRequest extends FormRequest
             'title' => 'required|min:5|max:255|string',
             'description' => 'required|string|min:100|max:20000',
             'word_count' => 'required|integer|min:50|max:30000',
-            'deadline' => 'required|string'
+            'deadline' => 'required|string',
+            'options.*.name' => 'string|min:1|max:255|required_with:options.*.value',
+            'options.*.value' => 'string|min:1|max:3000|required_with:options.*.name'
         ];
     }
 
@@ -38,7 +40,8 @@ class ContentListingRequest extends FormRequest
             title: $this->title,
             description: $this->description,
             wordCount: $this->word_count,
-            deadline: $this->deadline
+            deadline: $this->deadline,
+            options: $this->options
         );
     }
 }

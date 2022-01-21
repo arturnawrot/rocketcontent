@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ContentListingRequest;
 use App\Http\Controllers\Controller;
 use App\Models\ContentListing;
-use App\Http\Requests\ContentListingRequest;
 use App\Services\ContentListingService;
 
 class ContentRequestController extends Controller
@@ -17,7 +17,7 @@ class ContentRequestController extends Controller
     }
 
     public function showRequestForm() {
-        return view('customer.content.form');
+        return view('customer.content-listing.request-form');
     }
 
     public function submitRequest(ContentListingRequest $request) {

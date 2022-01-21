@@ -18,8 +18,10 @@ class ContentListingService {
                 'deadline' => $contentListingData->deadline,
                 'status' => 'active'
             ]);
-
-            // $contentListing->options()->createMany($contentListingData->options);
+            
+            if(isset($contentListingData->options)) {
+                $contentListing->options()->createMany($contentListingData->options);
+            }
             
             return $contentListing;
         });
