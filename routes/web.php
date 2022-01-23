@@ -40,6 +40,8 @@ Route::middleware(['auth:CUSTOMER'])->group(function () {
 
     Route::post('/content/new', [App\Http\Controllers\Customer\ContentRequestController::class, 'submitRequest'])->name('customer.content.request.request');
 
+    Route::post('/payment-method/add', [App\Http\Controllers\Customer\PaymentMethodController::class, 'addPaymentMethod'])->name('customer.payment-method.add');
+
 });
 // END: Customer only area.
 

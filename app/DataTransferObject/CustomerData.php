@@ -8,7 +8,7 @@ class CustomerData extends DataTransferObject
 {
     public UserData $userData;
 
-    public string $paymentIntent;
+    public PaymentMethodData $paymentMethodData;
 
     public SubscriptionData $subscriptionData;
 }

@@ -11,7 +11,7 @@
 
     </head>
     <body>
-        @include('inc.navbar')
+        @include('landing.inc.navbar')
 
         <div class="gap-between-hero-and-navbar">
             @include('landing/landing-page-sections.hero-section')

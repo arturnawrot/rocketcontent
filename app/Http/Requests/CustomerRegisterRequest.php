@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\DataTransferObject\CustomerData;
 use App\DataTransferObject\UserData;
 use App\DataTransferObject\SubscriptionData;
+use App\DataTransferObject\PaymentMethodData;
 
 class CustomerRegisterRequest extends FormRequest
 {
@@ -39,7 +40,7 @@ class CustomerRegisterRequest extends FormRequest
     public function getDto() : CustomerData {
         return new CustomerData(
             userData: new UserData(name: $this->name, email: $this->email, password: $this->password),
-            paymentIntent: $this->payment_method,
+            paymentMethodData: new PaymentMethodData(paymentIntent: $this->payment_method),
             subscriptionData: new SubscriptionData(recurringType: $this->recurring_type, wordCount: $this->wordCount)
         );
     }

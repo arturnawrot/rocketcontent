@@ -15,15 +15,20 @@ class CustomerService {
 
     protected $subscriptionService;
 
+    protected $paymentService;
+
     protected $stripe;
 
     public function __construct(UserService $userService, 
-        SubscriptionService $subscriptionService, 
+        SubscriptionService $subscriptionService,
+        PaymentService $paymentService,
         StripeClient $stripeClient
     ) {
         $this->userService = $userService;
 
         $this->subscriptionService = $subscriptionService;
+
+        $this->paymentService = $paymentService;
 
         $this->stripe = $stripeClient;
     }
@@ -32,7 +37,8 @@ class CustomerService {
         $user = $this->userService->create($customerData->userData, 'CUSTOMER');
         $user->createAsStripeCustomer();
 
-        $this->updatePaymentMethod($user, $customerData->paymentIntent, true);
+        $this->paymentService->addPaymentMethod($user, $customerData->paymentMethodData->paymentIntent, true);
+        $this->paymentService->setDefaultPaymentMethod($user, $customerData->paymentMethodData->paymentIntent);
 
         $priceName = PriceNameFactory::get($customerData->subscriptionData->recurringType);
 
@@ -40,7 +46,7 @@ class CustomerService {
             $user, 
             StripeConfig::PRODUCT_NAME, 
             $priceName, 
-            $customerData->paymentIntent, 
+            $customerData->paymentMethodData->paymentIntent, 
             $customerData->subscriptionData->wordCount
         );
 
@@ -58,41 +64,6 @@ class CustomerService {
         $user->save();
 
         return $user;
-    }
-
-    // $deleteUserOnFail should be true only during the customer's registration process.
-    // Laravel Cashier module is made that way that a user must be first created and saved before 
-    // adding the payment method and charging them. In case if for some reason the payment fails
-    // the user record must be removed from database, so the customer can fill out the same data
-    // in the reigstration form during another attempt. Otherwise they will receive a duplicate entry error.
-    public function updatePaymentMethod(User $user, string $paymentIntent, bool $deleteUserOnFail = false) {
-        try {
-            $this->subscriptionService->updatePaymentMethod($user, $paymentIntent);
-        } catch (\Stripe\Exception\ApiErrorException | \Stripe\Exception\InvalidRequestException $e) {
-            
-            if($deleteUserOnFail) {
-                $this->deleteCustomer($user);
-            }
-
-            return redirect()->back()->withErrors(['invalid_request' => 'There were some issues with processing your request to the payment processor. Please, try again later, or contact the customer service.']);
-        } 
-        
-        catch(\Stripe\Exception\CardException $e) {
-            return redirect()->back()->withErrors(['card_exception' => 'Your card was declined. Please, contact customer service.']);
-        } 
-        
-        // catch (\Stripe\Exception\RateLimitException $e) {
-        //     Too many requests made to the API too quickly
-        // } catch (\Stripe\Exception\AuthenticationException $e) {
-        //     Authentication with Stripe's API failed
-        //     (maybe you changed API keys recently)
-        // } 
-        
-        catch (\Stripe\Exception\ApiConnectionException $e) {
-            return redirect()->back()->withErrors(['api_connection' => 'There were some issues with processing your request to the payment processor. Please, try again later, or contact the customer service.']);
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['exception' => 'There were some issues with processing your request to the payment processor. Please, try again later, or contact the customer service.']);
-        }
     }
 
     public function deleteCustomer(User $user) {

@@ -2,7 +2,8 @@ install: file-permission dependency-install generate-app-key migration optimize
 install-dev: file-permission dependency-install generate-app-key migration optimize
 
 file-permission:
-	chmod -R 775 storage
+	chown -R laravel:www-data .
+	chmod -R 775 storage/
 	chmod o+w ./storage/ -R
 	chmod 775 bootstrap/cache/
 

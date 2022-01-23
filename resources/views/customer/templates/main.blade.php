@@ -6,6 +6,8 @@
 
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/customer.css">
+
+        <link href="/fontawesome/css/all.css" rel="stylesheet">
     </head>
     <body class="min-vh-100">
 
@@ -22,6 +24,8 @@
                     </div>
 
                     <div class="col-md-9 ms-sm-auto col-lg-10 pt-5 px-4">
+                        @include('inc.errors')
+                        
                         @yield('content')
                     </div>
                 </main>
