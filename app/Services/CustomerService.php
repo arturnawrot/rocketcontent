@@ -37,15 +37,18 @@ class CustomerService {
         $user = $this->userService->create($customerData->userData, 'CUSTOMER');
         $user->createAsStripeCustomer();
 
-        $this->paymentService->addPaymentMethod($user, $customerData->paymentMethodData->paymentIntent, true);
-        $this->paymentService->setDefaultPaymentMethod($user, $customerData->paymentMethodData->paymentIntent);
-
-        $priceName = PriceNameFactory::get($customerData->subscriptionData->recurringType);
-
+        try {
+            $this->paymentService->addPaymentMethod($user, $customerData->paymentMethodData->paymentIntent);
+            $this->paymentService->setDefaultPaymentMethod($user, $customerData->paymentMethodData->paymentIntent);
+        } catch (\Exception $e) {
+            $this->deleteCustomer($user);
+            throw $e;
+        }
+        
         $this->subscriptionService->subscribe(
             $user, 
             StripeConfig::PRODUCT_NAME, 
-            $priceName, 
+            PriceNameFactory::get($customerData->subscriptionData->recurringType), 
             $customerData->paymentMethodData->paymentIntent, 
             $customerData->subscriptionData->wordCount
         );

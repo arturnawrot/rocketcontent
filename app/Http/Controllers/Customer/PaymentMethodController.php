@@ -20,7 +20,7 @@ class PaymentMethodController extends Controller
     public function addPaymentMethod(AddPaymentMethodRequest $request)
     {
         $this->paymentService->addPaymentMethod(
-            $request->user(), $request->getDto()->paymentIntent
+            auth()->user(), $request->getDto()->paymentIntent
         );
 
         return redirect()->back()->withSuccess('The payment method has been successfully added.');

@@ -67,6 +67,7 @@ class CustomerRegistrationTest extends TestCase
         Event::assertDispatched(UserCreated::class);
     }
 
+    /** @group failing */
     /** @test */
     public function throws_an_error_on_invalid_payment_data()
     {
@@ -91,8 +92,8 @@ class CustomerRegistrationTest extends TestCase
         // Invalid credit card
 
         $response = $this->post(route('customer.register.request'), [
-            'name' => 'John Smith',
-            'email' => 'john@gmail.com',
+            'name' => 'Jacob Thompson',
+            'email' => 'JacobThompson@gmail.com',
             'password' => 'foobar',
             'payment_method' => 'some_invalid_payment_intent',
             'recurring_type' => 'monthly',
@@ -100,7 +101,7 @@ class CustomerRegistrationTest extends TestCase
         ]);
 
         $this->assertDatabaseMissing('users', [
-            'email' => 'john@gmail.com'
+            'email' => 'JacobThompson@gmail.com'
         ]);
 
         // @TODO assert more types of errors
@@ -109,10 +110,6 @@ class CustomerRegistrationTest extends TestCase
     protected function tearDown(): void
     {
         $this->process->stop();
-
-        if($this->user instanceof User) {
-            $this->app->make(\App\Services\UserService::class)->delete($this->user);
-        }
 
         parent::tearDown();
     }
