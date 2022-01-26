@@ -39,6 +39,10 @@ RUN apk add --no-cache jpeg-dev freetype-dev libpng libpng-dev && docker-php-ext
 
 RUN apk add --no-cache libzip-dev zlib-dev && docker-php-ext-install zip
 
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+        && pecl install redis \
+        && docker-php-ext-enable redis.so
+
 ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 ADD ./php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini

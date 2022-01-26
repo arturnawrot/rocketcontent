@@ -51,10 +51,25 @@ services:
 
   selenium:
     image: 'selenium/standalone-chrome:3.11.0-antimony'
+    container_name: selenium-rocketcontent
     depends_on:
       - php
     volumes:
       - /dev/shm:/dev/shm
+    networks:
+      - laravel
+    
+  redis:
+    image: "redis:alpine"
+    container_name: redis-rocketcontent
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
     networks:
       - laravel
 
