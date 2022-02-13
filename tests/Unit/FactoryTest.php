@@ -7,6 +7,18 @@ use Tests\TestCase;
 class FactoryTest extends TestCase
 {
     /** @test */
+    public function overrides_properties()
+    {
+        $userFactory = $this->app->make(\App\Services\Factories\UserFactory::class);
+        $userFactory->addParameters(accountType: 'CUSTOMER');
+        $userFactory->override(array('name' => 'myNameIsJack'));
+
+        $user = $userFactory->create();
+
+        $this->assertSame($user->name, 'myNameIsJack');
+    }
+
+    /** @test */
     public function adds_parameters()
     {
         $userFactory = $this->app->make(\App\Services\Factories\UserFactory::class);
@@ -18,7 +30,7 @@ class FactoryTest extends TestCase
     }
 
     /** @test */
-    public function overrides_same_parameters()
+    public function overrides_the_same_parameters()
     {
         $userFactory = $this->app->make(\App\Services\Factories\UserFactory::class);
         $userFactory->addParameters(accountType: 'CUSTOMER');

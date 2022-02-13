@@ -73,7 +73,7 @@ class CustomerRegistrationTest extends TestCase
     {
         Event::fake();
 
-        // Completelly invalid, non-existing payment method.
+        // Completely invalid, non-existing payment method.
         $response = $this->post(route('customer.register.request'), [
             'name' => 'John Smith',
             'email' => 'john@gmail.com',
@@ -91,14 +91,32 @@ class CustomerRegistrationTest extends TestCase
 
         // Invalid credit card
 
+        $data = \Stripe\Token::create([
+            'card' => [
+                "number" => "4000000000000044",
+                "exp_month" => 11,
+                "exp_year" => 2025,
+                "cvc" => "314",
+                "address_zip" => "30809"
+            ]
+        ]);
+
+        $token = $data['id'];
+
         $response = $this->post(route('customer.register.request'), [
             'name' => 'Jacob Thompson',
             'email' => 'JacobThompson@gmail.com',
             'password' => 'foobar',
-            'payment_method' => 'some_invalid_payment_intent',
+            'payment_method' => $token,
             'recurring_type' => 'monthly',
             'wordCount' => 4000
         ]);
+        
+        $response->assertSessionHasErrors('invalid_request');
+        // Actually it has nothing to do with 'invalid_request' type of exception
+        // and I was hoping to get 'card_exception' instead since I'm providing a broken credit card
+        // and the request by itself is not invalid, but unfortunately this is how Stripe works.
+        // $response->assertSessionHasErrors('card_exception');
 
         $this->assertDatabaseMissing('users', [
             'email' => 'JacobThompson@gmail.com'

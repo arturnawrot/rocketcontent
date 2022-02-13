@@ -11,6 +11,7 @@ use App\Helpers\StripeConfig;
 use App\Models\Traits\Presentable;
 use App\Models\Content\ContentListing;
 use App\Services\StorageService;
+use App\Repositories\Cache\PaymentMethodRepository;
 
 class User extends Authenticatable
 {
@@ -80,25 +81,6 @@ class User extends Authenticatable
     }
 
     public function getPaymentMethods() {
-        // @TODO Maybe there's a better way to do it like array_map() or something like this.
-        $newPaymentMethods = array();
-
-        $paymentMethods = $this->paymentMethods();
-
-        foreach($paymentMethods as $paymentMethod) {
-            $newPaymentMethod = array();
-
-            $paymentMethod = $paymentMethod->toArray();
-
-            $newPaymentMethod['brand'] = $paymentMethod['card']['brand'];
-            $newPaymentMethod['country'] = $paymentMethod['card']['country'];
-            $newPaymentMethod['last4'] = $paymentMethod['card']['last4'];
-            $newPaymentMethod['exp_month'] = $paymentMethod['card']['exp_month'];
-            $newPaymentMethod['exp_year'] = $paymentMethod['card']['exp_year'];
-
-            $newPaymentMethods[] = $newPaymentMethod;
-        }
-
-        return $newPaymentMethods;
+        return PaymentMethodRepository::getPaymentMethods($this);
     }
 }

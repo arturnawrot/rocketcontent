@@ -211,3 +211,6 @@ img {
   box-shadow: 2px 3px 11px 0px rgb(178 159 199 / 9%);
   border-color: #f6eeff;
 }
+.card-icon {
+  width: 20px;
+}

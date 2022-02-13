@@ -7,17 +7,25 @@ use App\Services\Factories\DtoFactory;
 use App\Services\UserService;
 
 class UserFactory extends DtoFactory {
-    protected $serviceClass = UserService::class;
+
+    protected $serviceDestination = [
+        'class' => UserService::class,
+        'method' => 'create'
+    ];
     
-    protected function define() {
-        return new UserData(
-            name: $this->faker->name(),
-            email: $this->faker->email(), 
-            password: $this->faker->password()
-        );
+    protected function getProperties() {
+        return [
+            'name' => $this->faker->name(),
+            'email' => $this->faker->email(), 
+            'password' => $this->faker->password()
+        ];
     }
 
-    protected function generateRandomParameters() {
-        return Null;
+    protected function define() {
+        return new UserData(
+            name: $this->properties['name'],
+            email: $this->properties['email'], 
+            password: $this->properties['password']
+        );
     }
 }

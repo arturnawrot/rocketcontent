@@ -7,9 +7,10 @@ use App\DataTransferObject\CustomerData;
 use App\Helpers\StripeConfig;
 use App\Factories\PriceNameFactory;
 use App\Expections\BusinessExpection;
+use App\Services\Contracts\AbstractEntityService;
 use Stripe\StripeClient;
 
-class CustomerService {
+class CustomerService extends AbstractEntityService {
 
     protected $userService;
 
@@ -38,8 +39,8 @@ class CustomerService {
         $user->createAsStripeCustomer();
 
         try {
-            $this->paymentService->addPaymentMethod($user, $customerData->paymentMethodData->paymentIntent);
-            $this->paymentService->setDefaultPaymentMethod($user, $customerData->paymentMethodData->paymentIntent);
+            $this->paymentService->addPaymentMethod($user, $customerData->paymentMethodData);
+            $this->paymentService->setDefaultPaymentMethod($user, $customerData->paymentMethodData);
         } catch (\Exception $e) {
             $this->deleteCustomer($user);
             throw $e;
@@ -49,7 +50,7 @@ class CustomerService {
             $user, 
             StripeConfig::PRODUCT_NAME, 
             PriceNameFactory::get($customerData->subscriptionData->recurringType), 
-            $customerData->paymentMethodData->paymentIntent, 
+            $customerData->paymentMethodData, 
             $customerData->subscriptionData->wordCount
         );
 
@@ -59,7 +60,7 @@ class CustomerService {
     }
     
     public function expandTrialTime(User $user, int $days) : User {
-        if($days <= 0) {
+        if($days < 0) {
             throw new BusinessExpection("The 'days' parameter cannot be zero or lower.");
         }
 

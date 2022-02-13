@@ -3,20 +3,52 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\DataTransferObject\PaymentMethodData;
 use App\Services\Traits\HasStripeRequestHook;
+use App\Events\PaymentMethodAdded;
+use App\Events\PaymentMethodAdding;
+use App\Exceptions\PaymentMethodAlreadyExistsException;
+use Stripe\StripeClient;
 
 class PaymentService
 {
-    public function setDefaultPaymentMethod(User $user, string $paymentIntent) {
-        $user->updateDefaultPaymentMethod($paymentIntent);
+    private $stripeClient;
+
+    public function __construct(StripeClient $stripeClient)
+    {
+        $this->stripeClient = $stripeClient;
     }
 
-    // $deleteUserOnFail should be true only during the customer's registration process.
-    // Laravel Cashier module is made that way that a user must be first created and saved before 
-    // adding the payment method and charging them. In case if for some reason the payment fails
-    // the user record must be removed from database, so the customer can fill out the same data
-    // in the reigstration form during another attempt. Otherwise they will receive a duplicate entry error.
-    public function addPaymentMethod(User $user, string $paymentIntent) {
-        $user->addPaymentMethod($paymentIntent);
+    public function setDefaultPaymentMethod(User $user, PaymentMethodData $paymentMethodData) {
+        $user->updateDefaultPaymentMethod($paymentMethodData->paymentIntent);
+    }
+
+    public function addPaymentMethod(User $user, PaymentMethodData $paymentMethodData) {
+        if($this->doesPaymentMethodAlreadyExists($user, $paymentMethodData->paymentIntent))
+            throw new PaymentMethodAlreadyExistsException();
+
+        $user->addPaymentMethod($paymentMethodData->paymentIntent);
+
+        PaymentMethodAdded::dispatch($user);
+    }
+
+    private function getCardInfoFromPaymentIntent(string $paymentIntent)
+    {
+        return $this->stripeClient->paymentMethods->retrieve($paymentIntent)->card;
+    }
+
+    public function doesPaymentMethodAlreadyExists(User $user, string $paymentIntent)
+    {
+        $card = $this->getCardInfoFromPaymentIntent($paymentIntent);
+        
+        $paymentMethods = $user->getPaymentMethods();
+
+        foreach($paymentMethods as $paymentMethod) {
+            if($paymentMethod['fingerprint'] === $card->fingerprint) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -41,7 +41,6 @@ Route::middleware(['auth:CUSTOMER'])->group(function () {
     Route::post('/content/new', [App\Http\Controllers\Customer\ContentRequestController::class, 'submitRequest'])->name('customer.content.request.request');
 
     Route::post('/payment-method/add', [App\Http\Controllers\Customer\PaymentMethodController::class, 'addPaymentMethod'])->name('customer.payment-method.add');
-
 });
 // END: Customer only area.
 
@@ -58,3 +57,7 @@ Route::get('/admin2131sa/customers', [App\Http\Controllers\Admin\CustomerControl
 // START: Local environment only area
 Route::get('/dev/phpinfo', [App\Http\Controllers\Dev\ShowPHPInfoController::class, 'show']);
 // END: Local environment only area
+
+// START: API
+Route::get('/api/getIntentToken', [App\Http\Controllers\Api\GenerateStripeIntentController::class, 'generateIntentToken'])->name('api.customer.intentToken.get');
+// END: API

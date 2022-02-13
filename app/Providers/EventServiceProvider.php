@@ -26,6 +26,10 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\UserDeleting::class => [
             \App\Listeners\DeleteUserAvatar::class,
         ],
+
+        \App\Events\PaymentMethodAdded::class => [
+            \App\Listeners\UpdatePaymentMethodCache::class,
+        ],
     ];
 
     /**

@@ -7,13 +7,17 @@
 
         <input type="hidden" id="payment-method" name="payment_method">
 
-        <label class="my-1 small" for="username">Card Holder Name</label>
-        <input id="card-holder-name" class="form-control form-control-sm border" placeholder="John Smith" id="username" name="name" value="{{ auth()->user()->name }}">
-        
-        <label class="my-1 small">Card Information</label>
-        <div class="mt-3 form-control border" id="card-element"></div>
+        <div>
+            <label class="my-1 small" for="username">Card Holder Name</label>
+            <input id="card-holder-name" class="form-control form-control-sm border" placeholder="John Smith" id="username" name="name" value="{{ auth()->user()->name }}">
+        </div>
 
-        <button id="loginButton" class="btn btn-primary btn-sm mt-3" type="button" data-secret="{{ auth()->user()->createSetupIntent()->client_secret }}">
+        <div class="mt-2">
+            <label class="my-1 small">Card Information</label>
+            <div class="form-control border" id="card-element"></div>
+        </div>
+
+        <button id="loginButton" class="btn btn-primary btn-sm mt-3" type="button">
             Submit
         </button>
     </form>

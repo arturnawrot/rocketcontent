@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Services\Traits\HasStripeRequestHook;
+use App\DataTransferObject\PaymentMethodData;
 
 class SubscriptionService {
 
@@ -11,11 +12,11 @@ class SubscriptionService {
         User $user, 
         string $productName, 
         string $priceName,
-        string $paymentIntent,
+        PaymentMethodData $paymentMethodData,
         int $quantity = null
     ) : void {
         $user->newSubscription($productName, $priceName)
             ->quantity($quantity)
-            ->create($paymentIntent);
+            ->create($paymentMethodData->paymentIntent);
     }
 }

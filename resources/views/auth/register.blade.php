@@ -50,7 +50,7 @@
     </div>
 
     <div class="d-grid">
-        <button type="button" id="loginButton" class="btn btn-block btn-primary" data-secret="{{ $intent->client_secret }}">
+        <button type="button" id="loginButton" class="btn btn-block btn-primary">
             Register
         </button>
     </div>

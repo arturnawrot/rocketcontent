@@ -9,11 +9,17 @@ use Faker\Generator;
 
 abstract class DtoFactory implements DtoFactoryInterface {
 
+    protected $serviceDestination;
+
     protected $faker;
 
+    // Service methods usually require some parameters, so this property will store them to later pass them to the serivce.
     protected $parameters;
 
     protected $dtoObject;
+
+    // All required properties that will be later inserted to DataTransferObject.
+    protected $properties;
 
     public function __construct() 
     {
@@ -25,23 +31,26 @@ abstract class DtoFactory implements DtoFactoryInterface {
             throw new FactoryExpection("{$clsName} does not implement define() which is a required method");
         }
 
-        $this->dtoObject = $this->define();
+        $this->properties = $this->getProperties();
     }
 
     public function create()
     {
-        return $this->getService()->create($this->getDto(), ...$this->getParameters());
+        return $this->getServiceClass()->{$this->serviceDestination['method']}($this->getDto(), ...$this->getParameters());
     }
 
     private function getService() 
     {
-        $instance = app($this->serviceClass);
-
-        if($instance instanceof AbstractEntityService) {
+        if($this->getServiceClass() instanceof AbstractEntityService) {
             return $instance;
         }
 
         throw new FactoryException("{$this->serviceClass} does not implement AbstractEntityService");
+    }
+
+    private function getServiceClass()
+    {
+        return app($this->serviceDestination['class']);
     }
 
     public function addParameters(...$newParameters)
@@ -62,28 +71,20 @@ abstract class DtoFactory implements DtoFactoryInterface {
 
     public function override(array $options)
     {
-        $dtoObject = $this->getDto();
-
-        $reflect = new \ReflectionClass($dtoObject);
-        $props = $reflect->getProperties(\ReflectionProperty::IS_PUBLIC);
-
-        foreach($options as $property => $optionValue) {
-            foreach($props as $prop) {
-                if($prop->name === $property) {
-                    $dtoObject->{$property} = $optionValue;
-                }
-            }
-        }
-
-        $this->dtoObject = $dtoObject;
+        $this->properties = array_replace_recursive($this->getProperties(), $options);
     }
 
     private function getDto()
     {
-        return $this->dtoObject;
+        return $this->define();
     }
 
-    abstract protected function define();
+    protected function generateRandomParameters()
+    {
+        return array();
+    }
 
-    abstract protected function generateRandomParameters();
+    abstract protected function getProperties();
+
+    abstract protected function define();
 }

@@ -10,7 +10,7 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
     /** @test */
-    public function login()
+    public function customer_login()
     {
         Event::fake();
 
