@@ -28,4 +28,8 @@ class UserFactory extends DtoFactory {
             password: $this->properties['password']
         );
     }
+
+    public function destroy() {
+        return false;
+    }
 }

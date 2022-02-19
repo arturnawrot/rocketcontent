@@ -7,10 +7,11 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Traits\ClearsCache;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use DatabaseMigrations, CreatesApplication;
+    use DatabaseMigrations, CreatesApplication, ClearsCache;
 
     /**
      * Prepare for Dusk test execution.

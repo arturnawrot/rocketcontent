@@ -11,6 +11,7 @@ migration:
 	php artisan migrate:fresh
 	php artisan migrate:reset
 	php artisan migrate --seed
+	make optimize
 
 generate-app-key:
 	php artisan key:generate

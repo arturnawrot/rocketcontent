@@ -56,6 +56,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $attributes = [
+        'avatar_path' => ''
+    ];
+
     public function isSubscribing() : bool {
         return $this->subscribed(StripeConfig::PRODUCT_NAME);
     }

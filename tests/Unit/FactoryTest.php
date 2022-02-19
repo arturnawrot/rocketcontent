@@ -49,5 +49,7 @@ class FactoryTest extends TestCase
         $user = $customerFactory->create();
 
         $this->assertSame($user->account_type, 'CUSTOMER');
+
+        $customerFactory->destroy();
     }
 }

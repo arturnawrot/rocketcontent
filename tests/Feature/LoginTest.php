@@ -14,19 +14,21 @@ class LoginTest extends TestCase
     {
         Event::fake();
 
-        $userFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
-        $userFactory->override(array('password' => '1234511'));
+        $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+        $customerFactory->override(array('password' => '1234511'));
 
-        $user = $userFactory->create();
+        $customer = $customerFactory->create();
 
         $response = $this->from(route('login'))
-            ->post(route('auth.login.request'), ['email' => $user->email, 'password' => '1234511'])
+            ->post(route('auth.login.request'), ['email' => $customer->email, 'password' => '1234511'])
             ->assertSessionHasNoErrors()
             ->assertRedirect(route('customer.dashboard.view'));
         
-        $this->followRedirects($response)->assertSee($user->name);
+        $this->followRedirects($response)->assertSee($customer->name);
 
-        $this->assertAuthenticatedAs($user);
+        $this->assertAuthenticatedAs($customer);
+
+        $customerFactory->destroy();
     }
 
     /** @test */

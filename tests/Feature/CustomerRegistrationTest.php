@@ -13,9 +13,6 @@ use App\Events\UserCreated;
 
 class CustomerRegistrationTest extends TestCase
 {
-
-    protected $user;
-
     /**
      * @var Process
      */
@@ -38,36 +35,28 @@ class CustomerRegistrationTest extends TestCase
     {
         Event::fake();
 
-        $data = \Stripe\Token::create([
-            'card' => [
-                "number" => "4242424242424242",
-                "exp_month" => 11,
-                "exp_year" => 2025,
-                "cvc" => "314",
-                "address_zip" => "30809"
-            ]
-        ]);
-
-        $token = $data['id'];
-
         $response = $this->post(route('customer.register.request'), [
             'name' => 'John Smith',
             'email' => 'johnsmith@gmail.com',
             'password' => '1234511',
-            'payment_method' => $token,
+            'payment_method' => 'pm_card_visa',
             'recurring_type' => 'monthly',
             'wordCount' => '4000'
         ]);
 
-        $this->user = User::Where('email', 'johnsmith@gmail.com')->first();
-
+        $response = $this->followRedirects($response);
+        
+        $response->assertStatus(200);
         $response->assertSee('John Smith');
         $response->assertSee('14 Days Remaining');
 
         Event::assertDispatched(UserCreated::class);
+
+        $this->app->make(\App\Services\CustomerService::class)->deleteCustomer(
+            User::Where('email', 'johnsmith@gmail.com')->first()
+        );
     }
 
-    /** @group failing */
     /** @test */
     public function throws_an_error_on_invalid_payment_data()
     {

@@ -41,4 +41,8 @@ class CustomerFactory extends DtoFactory {
     public static function getPaymentIntentToken() {
         return 'pm_card_visa';
     }
+
+    public function destroy() {
+        return app()->make(CustomerService::class)->deleteCustomer($this->result);
+    }
 }

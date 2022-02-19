@@ -15,15 +15,12 @@ use Tests\TestCase;
 
 class UserCreationTest extends TestCase
 {
-    protected $userService;
-
     protected $storageService;
 
     public function setUp() : void
     {
         parent::setUp();
 
-        $this->userService = $this->app->make(\App\Services\UserService::class);
         $this->storageService = $this->app->make(\App\Services\StorageService::class);
     }
 
@@ -34,21 +31,23 @@ class UserCreationTest extends TestCase
         
         Event::fake();
 
-        $userFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
-        $userFactory->override(array('name' => 'John Smith'));
+        $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+        $customerFactory->override(array('name' => 'John Smith'));
         
-        $user = $userFactory->create();
+        $customer = $customerFactory->create();
 
         $event = \Mockery::mock(UserCreated::class);
-        $event->user = $user;
+        $event->user = $customer;
 
         $listener = $this->app->make(GenerateUserAvatar::class);
         $listener->handle($event);
         
         $expectedSvg = $this->storageService->getFile('fixtures', 'exampleAvatar.svg');
-        $userSvg = $this->storageService->getFile('avatars', $user->avatar_path);
+        $customerSvg = $this->storageService->getFile('avatars', $customer->avatar_path);
 
-        $this->assertEquals($userSvg, $expectedSvg);
+        $this->assertEquals($customerSvg, $expectedSvg);
+
+        $customerFactory->destroy();
     }
 
     /** @test */
@@ -56,26 +55,26 @@ class UserCreationTest extends TestCase
     {
         Event::fake();
 
-        $userFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+        $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
         
-        $user = $userFactory->create();
+        $customer = $customerFactory->create();
 
         $event = \Mockery::mock(UserCreated::class);
-        $event->user = $user;
+        $event->user = $customer;
 
         $listener = $this->app->make(GenerateUserAvatar::class);
         $listener->handle($event);
 
         $event = \Mockery::mock(UserDeleting::class);
-        $event->user = $user;
+        $event->user = $customer;
 
         $listener = $this->app->make(DeleteUserAvatar::class);
         $listener->handle($event);
 
-        $this->userService->delete($user);
+        $customerFactory->destroy();
 
         $this->expectException(FileNotFoundException::class);
 
-        $this->storageService->getFile('avatars', $user->avatar_path);
+        $this->storageService->getFile('avatars', $customer->avatar_path);
     }
 }

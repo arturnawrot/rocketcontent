@@ -21,6 +21,8 @@ abstract class DtoFactory implements DtoFactoryInterface {
     // All required properties that will be later inserted to DataTransferObject.
     protected $properties;
 
+    protected $result;
+
     public function __construct() 
     {
         $this->faker = app(Generator::class);
@@ -36,7 +38,11 @@ abstract class DtoFactory implements DtoFactoryInterface {
 
     public function create()
     {
-        return $this->getServiceClass()->{$this->serviceDestination['method']}($this->getDto(), ...$this->getParameters());
+        $result = $this->getServiceClass()->{$this->serviceDestination['method']}($this->getDto(), ...$this->getParameters());
+        
+        $this->result = $result;
+
+        return $result;
     }
 
     private function getService() 
@@ -83,6 +89,8 @@ abstract class DtoFactory implements DtoFactoryInterface {
     {
         return array();
     }
+
+    abstract public function destroy();
 
     abstract protected function getProperties();
 

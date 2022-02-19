@@ -21,5 +21,7 @@ class PaymentMethodTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('payment_method_already_exists_exception');
+
+        $customerFactory->destroy();
     }
 }
