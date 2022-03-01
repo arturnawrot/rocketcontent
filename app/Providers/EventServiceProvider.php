@@ -30,6 +30,10 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\PaymentMethodAdded::class => [
             \App\Listeners\UpdatePaymentMethodCache::class,
         ],
+
+        \App\Events\DefaultPaymentMethodUpdated::class => [
+            \App\Listeners\UpdatePaymentMethodCache::class,
+        ],
     ];
 
     /**

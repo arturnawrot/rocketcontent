@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'landing/welcome');
 
+Route::get('/test', function () {
+    $customerFactory = app()->make(\App\Services\Factories\CustomerFactory::class);
+
+    $user = $customerFactory->create();
+
+    dd($user->paymentMethods()->count());
+});
+
 Route::middleware(['guest'])->group(function () {
 
     Route::view('/login', 'auth.login')->name('login');
@@ -41,6 +49,9 @@ Route::middleware(['auth:CUSTOMER'])->group(function () {
     Route::post('/content/new', [App\Http\Controllers\Customer\ContentRequestController::class, 'submitRequest'])->name('customer.content.request.request');
 
     Route::post('/payment-method/add', [App\Http\Controllers\Customer\PaymentMethodController::class, 'addPaymentMethod'])->name('customer.payment-method.add');
+
+    Route::post('/payment-method/setDefault', [App\Http\Controllers\Customer\PaymentMethodController::class, 'setDefaultPaymentMethod'])->name('customer.payment-method.set-default');
+
 });
 // END: Customer only area.
 

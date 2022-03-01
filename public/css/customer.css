@@ -212,5 +212,13 @@ img {
   border-color: #f6eeff;
 }
 .card-icon {
-  width: 20px;
+  width: 30px;
+}
+
+.cc-numbers {
+  vertical-align: -4px;
+}
+
+.cc-table {
+  font-size: 0.8em;
 }

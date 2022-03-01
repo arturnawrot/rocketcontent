@@ -25,16 +25,19 @@
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="card">
       <div class="card-body">
           <h2 id="card-title">Payment Methods</h2>
-          @foreach(auth()->user()->getPaymentMethods() as $paymentMethod)
-            <tr class="mt-3">
-              @include('customer.inc.credit-card-row')
-            </tr>
-          @endforeach
           
+          <table class="table table-bordered text-center cc-table">
+            @foreach(auth()->user()->getPaymentMethods() as $paymentMethod)
+              <tr class="mt-3">
+                @include('customer.inc.credit-card-row')
+              </tr>
+            @endforeach
+          </table>
+
           <div class="mt-3">
             @include('customer.inc.add-payment-method')
           </div>

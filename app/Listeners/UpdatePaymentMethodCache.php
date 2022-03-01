@@ -10,15 +10,7 @@ use \Cache;
 
 class UpdatePaymentMethodCache
 {
-
-
-    /**
-     * Handle the event.
-     *
-     * @param  \App\Events\UserCreated  $event
-     * @return void
-     */
-    public function handle(PaymentMethodAdded $event)
+    public function handle($event)
     {
         $customer = $event->customer;
         

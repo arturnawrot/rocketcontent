@@ -32,7 +32,7 @@ class PaymentMethodRepository
 
     private static function transformPaymentMethods(Collection $paymentMethods)
     {
-        // @TODO There's a better way to do it like array_map() or something like this.
+        // @TODO There's a better way to do it like array_map() or creating a seperate class.
         $newPaymentMethods = array();
 
         $uniquePaymentMethod = $paymentMethods->duplicates()->first();
@@ -49,17 +49,20 @@ class PaymentMethodRepository
             $newPaymentMethod['default'] = false;
             
             if($uniquePaymentMethod !== null) {
-                if($uniquePaymentMethod->toArray() === $paymentMethod) {
+                if($uniquePaymentMethod->toArray() === $paymentMethod
+                    || $paymentMethods->count() === 1) {
                     $newPaymentMethod['default'] = true;
                 }
             }
 
+            $newPaymentMethod['id'] = $paymentMethod['id'];
             $newPaymentMethod['brand'] = $paymentMethod['card']['brand'];
             $newPaymentMethod['country'] = $paymentMethod['card']['country'];
             $newPaymentMethod['last4'] = $paymentMethod['card']['last4'];
             $newPaymentMethod['exp_month'] = $paymentMethod['card']['exp_month'];
             $newPaymentMethod['exp_year'] = $paymentMethod['card']['exp_year'];
             $newPaymentMethod['fingerprint'] = $paymentMethod['card']['fingerprint'];
+            $newPaymentMethod['created_at'] = $paymentMethod['created'];
 
             $newPaymentMethods[] = $newPaymentMethod;
         }

@@ -52,4 +52,16 @@ class FactoryTest extends TestCase
 
         $customerFactory->destroy();
     }
+
+    /** @test */
+    public function customer_has_only_one_payment_method_on_creation()
+    {
+        $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+
+        $user = $customerFactory->create();
+
+        $this->assertSame($user->paymentMethods()->count(), 1);
+
+        // $customerFactory->destroy();
+    }
 }

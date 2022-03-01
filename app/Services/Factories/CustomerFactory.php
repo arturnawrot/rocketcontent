@@ -8,6 +8,8 @@ use App\DataTransferObject\PaymentMethodData;
 use App\DataTransferObject\SubscriptionData;
 use App\Services\Factories\DtoFactory;
 use App\Services\CustomerService;
+use App\Services\PaymentService;
+use App\Models\User;
 use Stripe\StripeClient;
 
 class CustomerFactory extends DtoFactory {
@@ -24,7 +26,7 @@ class CustomerFactory extends DtoFactory {
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
             'password' => $this->faker->password(),
-            'paymentIntent' => self::getPaymentIntentToken(),
+            'paymentIntent' => $this->getPaymentIntentToken(),
             'recurringType' => 'monthly',
             'wordCount' => 4000
         ];
@@ -38,8 +40,51 @@ class CustomerFactory extends DtoFactory {
         );
     }
 
-    public static function getPaymentIntentToken() {
-        return 'pm_card_visa';
+    public function attachTestPaymentMethod()
+    {
+        // @App\Models\User
+        $customer = $this->result;
+
+        if(!$customer instanceof User) {
+            throw new \Exception('$customer is not an instance of App\Models\User');
+        }
+
+        $paymentService = app()->make(PaymentService::class);
+
+        $dto = new PaymentMethodData(paymentIntent: self::getBackupPaymentIntentToken());
+
+        $paymentService->addPaymentMethod($customer, $dto);
+    }
+
+    private function createPaymentMethod(array $data)
+    {
+        $stripeClient = app()->make(\Stripe\StripeClient::class);
+
+        return $stripeClient->paymentMethods->create($data);
+    }
+
+    public function getPaymentIntentToken() : string {
+        return $this->createPaymentMethod([
+            'type' => 'card',
+            'card' => [
+                'number' => '4242424242424242',
+                'exp_month' => 2,
+                'exp_year' => 2025,
+                'cvc' => '314',
+            ],
+        ])['id'];
+    }
+
+    public function getBackupPaymentIntentToken() : string {
+        return $this->createPaymentMethod([
+            'type' => 'card',
+            'card' => [
+                'number' => '5555555555554444',
+                'exp_month' => 2,
+                'exp_year' => 2025,
+                'cvc' => '314',
+            ],
+        ])['id'];
     }
 
     public function destroy() {

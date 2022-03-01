@@ -38,11 +38,9 @@ abstract class DtoFactory implements DtoFactoryInterface {
 
     public function create()
     {
-        $result = $this->getServiceClass()->{$this->serviceDestination['method']}($this->getDto(), ...$this->getParameters());
+        $this->result = $this->getServiceClass()->{$this->serviceDestination['method']}($this->getDto(), ...$this->getParameters());
         
-        $this->result = $result;
-
-        return $result;
+        return $this->result;
     }
 
     private function getService() 
@@ -87,6 +85,7 @@ abstract class DtoFactory implements DtoFactoryInterface {
 
     protected function generateRandomParameters()
     {
+        // Not implemented
         return array();
     }
 

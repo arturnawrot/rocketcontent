@@ -38,5 +38,9 @@ class Handler extends ExceptionHandler
         $this->reportable(function (\Stripe\Exception\ApiErrorException $e) {
             return StripeExceptionHandler::handleException($e);
         });
+
+        $this->reportable(function (Exception $e) {
+            return StripeExceptionHandler::handleException($e);
+        });
     }
 }

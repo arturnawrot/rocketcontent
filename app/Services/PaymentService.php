@@ -6,7 +6,7 @@ use App\Models\User;
 use App\DataTransferObject\PaymentMethodData;
 use App\Services\Traits\HasStripeRequestHook;
 use App\Events\PaymentMethodAdded;
-use App\Events\PaymentMethodAdding;
+use App\Events\DefaultPaymentMethodUpdated;
 use App\Exceptions\PaymentMethodAlreadyExistsException;
 use Stripe\StripeClient;
 
@@ -21,6 +21,8 @@ class PaymentService
 
     public function setDefaultPaymentMethod(User $user, PaymentMethodData $paymentMethodData) {
         $user->updateDefaultPaymentMethod($paymentMethodData->paymentIntent);
+
+        DefaultPaymentMethodUpdated::dispatch($user);
     }
 
     public function addPaymentMethod(User $user, PaymentMethodData $paymentMethodData) {
