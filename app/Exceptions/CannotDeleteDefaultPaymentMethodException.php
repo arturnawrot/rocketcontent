@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class PaymentMethodAlreadyExistsException extends Exception
+class CannotDeleteDefaultPaymentMethodException extends Exception
 {
     /**
      * Render the exception into an HTTP response.
@@ -14,6 +14,6 @@ class PaymentMethodAlreadyExistsException extends Exception
      */
     public function render($request)
     {
-        return redirect()->back()->withErrors(['payment_method_already_exists_exception' => 'This payment method already exists in your account']);
+        return redirect()->back()->withErrors(['cannot_delete_default_payment_method' => 'Cannot delete a default payment method.']);
     }
 }

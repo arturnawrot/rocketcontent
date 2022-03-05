@@ -19,7 +19,9 @@ class PaymentMethodRepository
                 return array();
             
             $paymentMethods = $paymentMethods->merge([$user->defaultPaymentMethod()]);
-            return self::transformPaymentMethods($paymentMethods);
+            $paymentMethods = self::transformPaymentMethods($paymentMethods);
+
+            return $paymentMethods->sortByDesc('default');
         });
     }
 
@@ -67,6 +69,6 @@ class PaymentMethodRepository
             $newPaymentMethods[] = $newPaymentMethod;
         }
 
-        return $newPaymentMethods;
+        return collect($newPaymentMethods);
     }
 }

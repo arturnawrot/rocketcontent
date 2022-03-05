@@ -42,7 +42,7 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 // START: Customer only area.
 Route::middleware(['auth:CUSTOMER'])->group(function () {
 
-    Route::view('/home', 'customer.dashboard')->name('customer.dashboard.view');
+    Route::get('/home', [App\Http\Controllers\Customer\HomeController::class, 'dashboard'])->name('customer.dashboard.view');
 
     Route::get('/content/new', [App\Http\Controllers\Customer\ContentRequestController::class, 'showRequestForm'])->name('customer.content.request.view');
 
@@ -51,6 +51,8 @@ Route::middleware(['auth:CUSTOMER'])->group(function () {
     Route::post('/payment-method/add', [App\Http\Controllers\Customer\PaymentMethodController::class, 'addPaymentMethod'])->name('customer.payment-method.add');
 
     Route::post('/payment-method/setDefault', [App\Http\Controllers\Customer\PaymentMethodController::class, 'setDefaultPaymentMethod'])->name('customer.payment-method.set-default');
+
+    Route::post('/payment-method/delete', [App\Http\Controllers\Customer\PaymentMethodController::class, 'deletePaymentMethod'])->name('customer.payment-method.delete');
 
 });
 // END: Customer only area.

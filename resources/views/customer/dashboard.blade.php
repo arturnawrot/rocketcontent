@@ -1,6 +1,9 @@
 @extends('customer.templates.main')
 
 @section('content')
+
+@include('customer.modals.payment-method-actions-modals')
+
 <div class="row">
   <div class="col-md-6 mb-2">
 
@@ -30,8 +33,8 @@
       <div class="card-body">
           <h2 id="card-title">Payment Methods</h2>
           
-          <table class="table table-bordered text-center cc-table">
-            @foreach(auth()->user()->getPaymentMethods() as $paymentMethod)
+          <table class="table text-center cc-table">
+            @foreach($user->getPaymentMethods() as $paymentMethod)
               <tr class="mt-3">
                 @include('customer.inc.credit-card-row')
               </tr>

@@ -222,3 +222,23 @@ img {
 .cc-table {
   font-size: 0.8em;
 }
+
+.cc-table tr:last-child > td {
+  border-bottom: 0;
+}
+
+.dropdown-menu-center {
+  right: auto;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+
+#cc-actions-menu .dropdown-menu {
+  min-width: 7rem;
+}
+
+#delete-action-link {
+  color: #ff4052;
+}

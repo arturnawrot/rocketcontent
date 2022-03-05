@@ -19,16 +19,35 @@
             Expires {{ $paymentMethod['exp_month'] }}/{{ $paymentMethod['exp_year'] }}
         </td>
         <td>
-            @if(!$paymentMethod['default'])
-                <form id="set-default-pm-form" action="{{ route('customer.payment-method.set-default') }}" method="POST" style="display: none;">
-                    <input type="hidden" name="payment_method" value="{{ $paymentMethod['id'] }}">
-                    @csrf
-                </form>
-
-                <a href="{{ route('customer.payment-method.set-default') }}" onclick="event.preventDefault();document.getElementById('set-default-pm-form').submit();">Set as default</a>
+            @if($paymentMethod['default'])
+                <b>Default</b> 
             @else
-                Default
+                Backup
             @endif
+        </td>
+        <td>
+
+            <div class="dropdown" id="cc-actions-menu">
+                <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h"></i>
+                </span>
+                <ul class="dropdown-menu dropdown-menu-center text-center" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item text-muted" role="button" href="" data-bs-toggle="modal" data-bs-target="#{{ $paymentMethod['id'] }}-update">
+                            Edit
+                        </a>
+                    </li>
+
+                    @if(!$paymentMethod['default'])
+                        <li>
+                            <a class="dropdown-item" id="delete-action-link" role="button" href="" data-bs-toggle="modal" data-bs-target="#{{ $paymentMethod['id'] }}-delete">
+                                Delete
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+                 
         </td>
     </span>
 </div>
