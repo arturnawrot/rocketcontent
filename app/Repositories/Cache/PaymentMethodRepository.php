@@ -16,7 +16,7 @@ class PaymentMethodRepository
             $paymentMethods = $user->paymentMethods();
 
             if($paymentMethods->isEmpty()) 
-                return array();
+                return collect([]);
             
             $paymentMethods = $paymentMethods->merge([$user->defaultPaymentMethod()]);
             $paymentMethods = self::transformPaymentMethods($paymentMethods);
@@ -65,6 +65,8 @@ class PaymentMethodRepository
             $newPaymentMethod['exp_year'] = $paymentMethod['card']['exp_year'];
             $newPaymentMethod['fingerprint'] = $paymentMethod['card']['fingerprint'];
             $newPaymentMethod['created_at'] = $paymentMethod['created'];
+            $newPaymentMethod['name'] = $paymentMethod['billing_details']['name'];
+
 
             $newPaymentMethods[] = $newPaymentMethod;
         }

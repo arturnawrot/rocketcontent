@@ -242,3 +242,7 @@ img {
 #delete-action-link {
   color: #ff4052;
 }
+
+#dropdownMenuButton {
+  cursor: pointer;
+}

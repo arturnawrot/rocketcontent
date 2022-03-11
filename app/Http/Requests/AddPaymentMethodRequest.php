@@ -31,6 +31,6 @@ class AddPaymentMethodRequest extends FormRequest
 
     public function getDto()
     {
-        return new PaymentMethodData(paymentIntent: $this->payment_method);
+        return new PaymentMethodData(id: $this->payment_method);
     }
 }

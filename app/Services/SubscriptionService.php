@@ -17,6 +17,6 @@ class SubscriptionService {
     ) : void {
         $user->newSubscription($productName, $priceName)
             ->quantity($quantity)
-            ->create($paymentMethodData->paymentIntent);
+            ->create($paymentMethodData->id);
     }
 }

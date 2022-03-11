@@ -28,15 +28,27 @@
         <td>
 
             <div class="dropdown" id="cc-actions-menu">
-                <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-ellipsis-h"></i>
                 </span>
                 <ul class="dropdown-menu dropdown-menu-center text-center" aria-labelledby="dropdownMenuButton1">
                     <li>
                         <a class="dropdown-item text-muted" role="button" href="" data-bs-toggle="modal" data-bs-target="#{{ $paymentMethod['id'] }}-update">
-                            Edit
+                            Update Card
                         </a>
                     </li>
+
+                    @if(!$paymentMethod['default'])
+                        <form id="set-default-pm-form" action="{{ route('customer.payment-method.set-default') }}" method="POST" style="display: none;">
+                            <input type="hidden" name="payment_method" value="{{ $paymentMethod['id'] }}">
+                            @csrf
+                        </form>
+
+                        <li>
+                            <a href="{{ route('customer.payment-method.set-default') }}" class="dropdown-item text-muted" onclick="event.preventDefault();document.getElementById('set-default-pm-form').submit();">Make Default</a>
+                        </li>
+                    @endif
+
 
                     @if(!$paymentMethod['default'])
                         <li>

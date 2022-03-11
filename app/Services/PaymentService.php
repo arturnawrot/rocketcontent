@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Models\User;
 use App\DataTransferObject\PaymentMethodData;
-use App\Services\Traits\HasStripeRequestHook;
 use App\Events\PaymentMethodAdded;
 use App\Events\PaymentMethodDeleted;
+use App\Events\PaymentMethodUpdated;
 use App\Events\DefaultPaymentMethodUpdated;
 use App\Exceptions\PaymentMethodAlreadyExistsException;
 use App\Exceptions\CannotDeleteDefaultPaymentMethodException;
@@ -22,53 +22,64 @@ class PaymentService
     }
 
     public function setDefaultPaymentMethod(User $user, PaymentMethodData $paymentMethodData) {
-        $user->updateDefaultPaymentMethod($paymentMethodData->paymentIntent);
+        $user->updateDefaultPaymentMethod($paymentMethodData->id);
 
         DefaultPaymentMethodUpdated::dispatch($user);
     }
 
     public function addPaymentMethod(User $user, PaymentMethodData $paymentMethodData) {
-        if($this->doesPaymentMethodAlreadyExists($user, $paymentMethodData->paymentIntent))
+        if($this->doesPaymentMethodAlreadyExists($user, $paymentMethodData->id))
             throw new PaymentMethodAlreadyExistsException();
 
-        $user->addPaymentMethod($paymentMethodData->paymentIntent);
+        $user->addPaymentMethod($paymentMethodData->id);
 
         PaymentMethodAdded::dispatch($user);
     }
 
+    public function updatePaymentMethod(User $user, PaymentMethodData $paymentMethodData)
+    {
+        $billingDetailsData = $paymentMethodData->billingDetailsData;
+
+        $this->stripeClient->paymentMethods->update(
+            $paymentMethodData->id,
+            [
+                'billing_details' => [
+                    'name' =>   $billingDetailsData->cardholderName
+                ],
+                'card' => [
+                    'exp_month' => $billingDetailsData->expirationMonth,
+                    'exp_year' => $billingDetailsData->expirationYear
+                ]
+            ]
+        );
+
+        PaymentMethodUpdated::dispatch($user);
+    }
+
     public function deletePaymentMethod(User $user, PaymentMethodData $paymentMethodData)
     {
-        if($this->isPaymentMethodDefault($user, $paymentMethodData->paymentIntent)) {
+        if($this->isPaymentMethodDefault($user, $paymentMethodData->id))
             throw new CannotDeleteDefaultPaymentMethodException();
-        }
-
-        $user->deletePaymentMethod($paymentMethodData->paymentIntent);
+        
+        $user->deletePaymentMethod($paymentMethodData->id);
 
         PaymentMethodDeleted::dispatch($user);
     }
 
-    private function isPaymentMethodDefault(User $user, string $paymentMethodId)
+    private function isPaymentMethodDefault(User $user, string $id)
     {
-        return $user->getPaymentMethods()->firstWhere('id', $paymentMethodId)['default'];
+        return $user->getPaymentMethods()->firstWhere('id', $id)['default'];
     }
 
-    private function getCardInfoFromPaymentIntent(string $paymentIntent)
+    private function getCardInfoFrompaymentMethodId(string $paymentMethodId)
     {
-        return $this->stripeClient->paymentMethods->retrieve($paymentIntent)->card;
+        return $this->stripeClient->paymentMethods->retrieve($paymentMethodId)->card;
     }
 
-    public function doesPaymentMethodAlreadyExists(User $user, string $paymentIntent)
+    public function doesPaymentMethodAlreadyExists(User $user, string $paymentMethodId)
     {
-        $card = $this->getCardInfoFromPaymentIntent($paymentIntent);
+        $card = $this->getCardInfoFrompaymentMethodId($paymentMethodId);
         
-        $paymentMethods = $user->getPaymentMethods();
-
-        foreach($paymentMethods as $paymentMethod) {
-            if($paymentMethod['fingerprint'] === $card->fingerprint) {
-                return true;
-            }
-        }
-
-        return false;
+        return $user->getPaymentMethods()->contains('fingerprint', $card->fingerprint);
     }
 }

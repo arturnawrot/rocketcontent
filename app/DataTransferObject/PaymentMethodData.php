@@ -6,5 +6,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class PaymentMethodData extends DataTransferObject
 {
-    public string $paymentIntent;
+    public string $id;
+
+    public ?BillingDetailsData $billingDetailsData;
 }

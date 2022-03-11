@@ -3,32 +3,28 @@
     <div class="modal fade show" id="{{ $paymentMethod['id'] }}-update">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Payment Method Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Payment Method Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('customer.payment-method.update') }}" method="POST">
+                    <div class="modal-body">
+                        @method('patch')
+                        @csrf()
+                        <input type="hidden" name="payment_method" value="{{ $paymentMethod['id'] }}">
+
+                        <input type="text" name="cardholder_name">
+                        <input type="text" name="expiration_month">
+                        <input type="text" name="expiration_year">
+                        <p>Modal body text goes here.</p>
 
 
-
-            @if(!$paymentMethod['default'])
-                <form id="set-default-pm-form" action="{{ route('customer.payment-method.set-default') }}" method="POST" style="display: none;">
-                    <input type="hidden" name="payment_method" value="{{ $paymentMethod['id'] }}">
-                    @csrf
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </form>
-
-                <a href="{{ route('customer.payment-method.set-default') }}" onclick="event.preventDefault();document.getElementById('set-default-pm-form').submit();">Set as default, </a>
-            @endif
-
-
-
-
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Submit</button>
-            </div>
             </div>
         </div>
     </div>

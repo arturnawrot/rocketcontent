@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ContentListingRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddPaymentMethodRequest;
+use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Http\Requests\DeletePaymentMethodRequest;
 use App\Http\Requests\SetDefaultPaymentMethodRequest;
 use App\Services\PaymentService;
@@ -44,5 +45,14 @@ class PaymentMethodController extends Controller
         );
 
         return redirect()->back()->withSuccess('The payment method has been succesfuly deleted.');
+    }
+
+    public function updatePaymentMethod(UpdatePaymentMethodRequest $request)
+    {
+        $this->paymentService->updatePaymentMethod(
+            auth()->user(), $request->getDto()
+        );
+
+        return redirect()->back()->withSuccess('The payment method has been succesfuly updated.');
     }
 }

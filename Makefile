@@ -5,7 +5,10 @@ file-permission:
 	chown -R laravel:www-data .
 	chmod -R 775 storage/
 	chmod o+w ./storage/ -R
+	chmod -R gu+w storage $(ls | awk '{if($1 != "mysql"){ print $1 }}')
+	chmod -R guo+w storage $(ls | awk '{if($1 != "mysql"){ print $1 }}')
 	chmod 775 bootstrap/cache/
+	make optimize
 
 migration:
 	php artisan migrate:fresh

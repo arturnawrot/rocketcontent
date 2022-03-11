@@ -26,7 +26,7 @@ class CustomerFactory extends DtoFactory {
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
             'password' => $this->faker->password(),
-            'paymentIntent' => $this->getPaymentIntentToken(),
+            'id' => $this->getPaymentMethodIdToken(),
             'recurringType' => 'monthly',
             'wordCount' => 4000
         ];
@@ -35,7 +35,7 @@ class CustomerFactory extends DtoFactory {
     protected function define() {
         return new CustomerData(
             userData: new UserData(name: $this->properties['name'], email: $this->properties['email'], password: $this->properties['password']),
-            paymentMethodData: new PaymentMethodData(paymentIntent: $this->properties['paymentIntent']),
+            paymentMethodData: new PaymentMethodData(id: $this->properties['id']),
             subscriptionData: new SubscriptionData(recurringType: $this->properties['recurringType'], wordCount: $this->properties['wordCount'])
         );
     }
@@ -51,7 +51,7 @@ class CustomerFactory extends DtoFactory {
 
         $paymentService = app()->make(PaymentService::class);
 
-        $dto = new PaymentMethodData(paymentIntent: self::getBackupPaymentIntentToken());
+        $dto = new PaymentMethodData(id: self::getBackuppaymentMethodIdToken());
 
         $paymentService->addPaymentMethod($customer, $dto);
     }
@@ -63,7 +63,7 @@ class CustomerFactory extends DtoFactory {
         return $stripeClient->paymentMethods->create($data);
     }
 
-    public function getPaymentIntentToken() : string {
+    public function getPaymentMethodIdToken() : string {
         return $this->createPaymentMethod([
             'type' => 'card',
             'card' => [
@@ -75,7 +75,7 @@ class CustomerFactory extends DtoFactory {
         ])['id'];
     }
 
-    public function getBackupPaymentIntentToken() : string {
+    public function getBackupPaymentMethodIdToken() : string {
         return $this->createPaymentMethod([
             'type' => 'card',
             'card' => [

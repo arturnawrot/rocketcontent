@@ -40,7 +40,7 @@ class CustomerRegisterRequest extends FormRequest
     public function getDto() : CustomerData {
         return new CustomerData(
             userData: new UserData(name: $this->name, email: $this->email, password: $this->password),
-            paymentMethodData: new PaymentMethodData(paymentIntent: $this->payment_method),
+            paymentMethodData: new PaymentMethodData(id: $this->payment_method),
             subscriptionData: new SubscriptionData(recurringType: $this->recurring_type, wordCount: $this->wordCount)
         );
     }
