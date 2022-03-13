@@ -17,13 +17,13 @@
                 
                 @include('customer.inc.sidebar')
 
-                <main class="px-md-5">
-                    <div class="col-md-9 ms-sm-auto col-lg-10 pt-4 px-4">
+                <main class="main">
+                    <div class="col-sm-12 pt-4 px-4">
                         @include('customer.inc.navbar')
 
                     </div>
 
-                    <div class="col-md-9 ms-sm-auto col-lg-10 pt-5 px-4">
+                    <div class="col-sm-12 pt-5 px-4">
                         @include('inc.errors')
                         
                         @yield('content')

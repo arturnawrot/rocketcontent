@@ -1,66 +1,80 @@
-<nav id="sidebarMenu" class="navbar-collapse collapse col-md-3 col-lg-2 d-md-block bg-light sidebar">
-      <div class="sidebar-sticky text-center text-md-start">
+<nav id="sidebarMenu" class="navbar-collapse collapse d-md-block bg-light sidebar">
+      <div class="sidebar-sticky text-center text-sm-start ">
         <ul class="nav flex-column">
           
-          <div class="d-block mx-auto mt-4">
+          <div class="my-4 d-block mx-auto">
             <img src="/svg/logo.svg" id="logo"/>
           </div>
 
 
-          <div class="nav-item mx-auto d-block mt-5">
+          <!-- <div class="nav-item mx-auto d-block mt-5">
             <img src="{{ auth()->user()->getAvatarUrl() }}" id="avatar">
           </div>
 
           <div class="nav-item text-center mt-3">
             <span id="name">{{ auth()->user()->name }}</span>
-          </div>
+          </div> -->
 
-          @if(auth()->user()->isOnTrial())
+          <!-- @if(auth()->user()->isOnTrial())
           <div class="nav-item text-center mt-3">
             <span id="trial-message">
                 Worry-Free Trial: <br/>
                 {{ auth()->user()->present()->daysBeforeTrialEnds() }} Days Remaining
             </span>
           </div>
-          @endif
+          @endif -->
 
-
-          <li id="sidebar-elements-that-show-up-on-mobile">
-            <div class="m-0 my-4 mx-auto d-block">
-              <button id="request-content-button" type="button">Request new content</button>
-            </div>
-          </li>
           
 
-          <div id="sidebar-navigation-links" class="mt-md-3 d-block mx-auto">
-              <li class="nav-item mt-md-4">
-                <a class="nav-link active" aria-current="page" href="#">
-                  <span data-feather="home"></span>
-                  Dashboard
-                </a>
+          <div class="mt-md-3 d-block mx-auto">
+              <!-- <li id="sidebar-elements-that-show-up-on-mobile"> -->
+              <li>
+                <div class="m-0 mb-4">
+                  <button id="request-content-button" type="button">Request Content</button>
+                </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Content
-                </a>
-              </li>              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Resources
-                </a>
-              </li>              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Information
-                </a>
-              </li>              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Orders
-                </a>
-              </li>
+
+              <div id="sidebar-navigation-links" class="mt-5">
+                <li class="nav-item mt-md-4">
+                  <a class="nav-link active" aria-current="page" href="#">
+                    <i class="far fa-copy"></i>
+                    Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="far fa-life-ring"></i>
+                    Content
+                  </a>
+                </li>              
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="far fa-address-card"></i>
+                    Resources
+                  </a>
+                </li>              
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="far fa-folder-open"></i>                    
+                    Information
+                  </a>
+                </li>              
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="far fa-trash-alt"></i>
+                    Orders
+                  </a>
+                </li>
+              </div>
+
           </div>
+
+          <div class="d-block mx-auto">
+              <div class="progress blue"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
+                  <div class="progress-value">90%</div>
+              </div>
+          </div>
+
 
         </ul>
       </div>
