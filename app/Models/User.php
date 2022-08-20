@@ -12,6 +12,7 @@ use App\Models\Traits\Presentable;
 use App\Models\Content\ContentListing;
 use App\Services\StorageService;
 use App\Repositories\Cache\PaymentMethodRepository;
+use App\Repositories\Cache\StripeMetaDataRepository;
 
 class User extends Authenticatable
 {
@@ -60,8 +61,13 @@ class User extends Authenticatable
         'avatar_path' => ''
     ];
 
+    public function getSubscriptionStripeId()
+    {
+        return StripeConfig::PRODUCT_NAME;
+    }
+
     public function isSubscribing() : bool {
-        return $this->subscribed(StripeConfig::PRODUCT_NAME);
+        return $this->subscribed($this->getSubscriptionStripeId());
     }
 
     public function isOnTrial() : bool {
@@ -86,5 +92,44 @@ class User extends Authenticatable
 
     public function getPaymentMethods() {
         return PaymentMethodRepository::getPaymentMethods($this);
+    }
+
+    public function getSubscription()
+    {
+        return StripeMetaDataRepository::getStripeSubscriptionObject($this);
+    }
+
+    public function getNextBillingDate() : \Carbon\Carbon
+    {
+        $timestamp = $this->getSubscription()->current_period_end;
+        return \Carbon\Carbon::createFromTimeStamp($timestamp);
+    }
+
+    protected static function booted()
+    {
+        static::updated(function ($user) {
+            $fieldsToBeUpdated = collect();
+
+            foreach($user->getStripeUpdatableFields() as $fieldName => $value) {
+                if (!isset($user->{$fieldName})) 
+                    continue;
+
+                if ($user->{$fieldName} != $user->getOriginal($fieldName)) {
+                    $fieldsToBeUpdated->push([$fieldName => $value]);
+                }
+            }
+
+            if($fieldsToBeUpdated->count() > 0) {
+                $user->updateStripeCustomer($fieldsToBeUpdated->toArray());
+            }
+        });
+    }
+
+    public function getStripeUpdatableFields()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email
+        ];
     }
 }

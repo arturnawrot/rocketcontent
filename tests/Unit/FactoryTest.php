@@ -62,6 +62,6 @@ class FactoryTest extends TestCase
 
         $this->assertSame($user->paymentMethods()->count(), 1);
 
-        // $customerFactory->destroy();
+        $customerFactory->destroy();
     }
 }

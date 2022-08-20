@@ -410,3 +410,7 @@ img {
       transform: rotate(135deg)
   }
 }
+
+.table-responsive {
+  overflow: visible;
+}

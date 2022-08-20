@@ -25,7 +25,7 @@ class PaymentMethodRepository
         });
     }
 
-    public static function updatePaymentMethods(User $user)
+    public static function updatePaymentMethods(User $user) : void
     {
         Cache::forget("payment_methods.{$user->id}");
 

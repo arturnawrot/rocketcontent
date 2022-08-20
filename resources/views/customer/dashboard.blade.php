@@ -17,18 +17,13 @@
   </div>
   <div class="col-md-6 col-sm-12">
 
-    <div class="card">
-      <div class="card-body">
-          <h2 id="card-title">Subscription</h2>
-          This is some text within a card body.
-      </div>
-    </div>
+    @include('customer.cards.subscription')
     
   </div>
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-5 col-sm-12">
+  <div class="col-md-12 col-lg-6">
     <div class="card">
       <div class="card-body">
           <h2 id="card-title">Payment Methods</h2>

@@ -1,5 +1,5 @@
 <nav id="sidebarMenu" class="navbar-collapse collapse d-md-block bg-light sidebar">
-      <div class="sidebar-sticky text-center text-sm-start ">
+      <div class="sidebar-sticky text-sm-start mt-4">
         <ul class="nav flex-column">
           
           <div class="my-4 d-block mx-auto">
@@ -13,18 +13,7 @@
 
           <div class="nav-item text-center mt-3">
             <span id="name">{{ auth()->user()->name }}</span>
-          </div> -->
-
-          <!-- @if(auth()->user()->isOnTrial())
-          <div class="nav-item text-center mt-3">
-            <span id="trial-message">
-                Worry-Free Trial: <br/>
-                {{ auth()->user()->present()->daysBeforeTrialEnds() }} Days Remaining
-            </span>
-          </div>
-          @endif -->
-
-          
+          </div> -->  
 
           <div class="mt-md-3 d-block mx-auto">
               <!-- <li id="sidebar-elements-that-show-up-on-mobile"> -->
@@ -66,6 +55,15 @@
                   </a>
                 </li>
               </div>
+
+          @if(auth()->user()->isOnTrial())
+            <div class="nav-item text-center mt-3">
+              <span id="trial-message">
+                  Worry-Free Trial: <br/>
+                  {{ auth()->user()->present()->daysBeforeTrialEnds() }} Days Remaining
+              </span>
+            </div>
+          @endif
 
           </div>
 

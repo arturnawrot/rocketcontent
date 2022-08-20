@@ -16,4 +16,8 @@ trait CustomerPresenter {
     public function timeBeforeTrialEnds() : string {
         return now()->diff($this->trial_ends_at)->format('%d days %h hours');
     }
+
+    public function formattedNextBillingDate() : string {
+        return $this->entity->getNextBillingDate()->toFormattedDateString();
+    }
 }
