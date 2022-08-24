@@ -11,11 +11,13 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, DatabaseMigrations, ClearsCache;
 
+    protected $secret;
+
     protected function setUp() : void {
         parent::setUp();
 
-        $secret = env('STRIPE_SECRET');
+        $this->secret = env('STRIPE_SECRET');
 
-        Stripe::setApiKey($secret);
+        Stripe::setApiKey($this->secret);
     }
 }

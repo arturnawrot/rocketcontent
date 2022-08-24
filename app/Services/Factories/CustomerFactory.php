@@ -14,7 +14,6 @@ use Stripe\StripeClient;
 
 class CustomerFactory extends DtoFactory {
 
-
     protected $serviceDestination = [
         'class' => CustomerService::class,
         'method' => 'register'
@@ -40,7 +39,7 @@ class CustomerFactory extends DtoFactory {
         );
     }
 
-    public function attachTestPaymentMethod()
+    public function attachTestPaymentMethod(string $type = 'backup') : void
     {
         // @App\Models\User
         $customer = $this->result;
@@ -51,7 +50,18 @@ class CustomerFactory extends DtoFactory {
 
         $paymentService = app()->make(PaymentService::class);
 
-        $dto = new PaymentMethodData(id: self::getBackuppaymentMethodIdToken());
+        switch ($type) {
+            case 'backup':
+                $paymentId = self::getBackuppaymentMethodIdToken();
+                break;
+            case 'broken':
+                $paymentId = self::getBrokenPaymentMethodIdToken();
+                break;
+            default:
+                throw new \Exception('Invalid payment ID type');
+        }
+
+        $dto = new PaymentMethodData(id: $paymentId);
 
         $paymentService->addPaymentMethod($customer, $dto);
     }
@@ -80,6 +90,19 @@ class CustomerFactory extends DtoFactory {
             'type' => 'card',
             'card' => [
                 'number' => '5555555555554444',
+                'exp_month' => 2,
+                'exp_year' => 2025,
+                'cvc' => '314',
+            ],
+        ])['id'];
+    }
+
+    // This payment method will be sucesfully recognized and saved, however it will fail whenever it's used for actual payments.
+    public function getBrokenPaymentMethodIdToken() : string {
+        return $this->createPaymentMethod([
+            'type' => 'card',
+            'card' => [
+                'number' => '4000000000000341',
                 'exp_month' => 2,
                 'exp_year' => 2025,
                 'cvc' => '314',

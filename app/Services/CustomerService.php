@@ -34,9 +34,9 @@ class CustomerService extends AbstractEntityService {
         $this->stripe = $stripeClient;
     }
 
-    public function register(CustomerData $customerData, int $trialDays = 0) : User {
+    public function register(CustomerData $customerData, int $trialDays = 0, array $stripeOptions = array()) : User {
         $user = $this->userService->create($customerData->userData, 'CUSTOMER');
-        $user->createAsStripeCustomer();
+        $user->createAsStripeCustomer($stripeOptions);
 
         try {
             $this->paymentService->addPaymentMethod($user, $customerData->paymentMethodData);
@@ -74,4 +74,23 @@ class CustomerService extends AbstractEntityService {
         $this->stripe->customers->delete( $user->stripe_id );
         $this->userService->delete($user);
     }
+
+    public static function syncCustomerDataWithStripe(User $user) : void
+    {
+        $fieldsToBeUpdated = collect();
+
+        foreach($user->getStripeUpdatableFields() as $fieldName => $value) {
+            if (!isset($user->{$fieldName})) 
+                continue;
+
+            if ($user->{$fieldName} != $user->getOriginal($fieldName)) {
+                $fieldsToBeUpdated->push([$fieldName => $value]);
+            }
+        }
+
+        if($fieldsToBeUpdated->count() > 0) {
+            $user->updateStripeCustomer($fieldsToBeUpdated->toArray());
+        }
+    }
+
 }

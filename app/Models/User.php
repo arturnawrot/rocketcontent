@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use App\Repositories\Cache\PaymentMethodRepository;
+use App\Repositories\Cache\StripeMetaDataRepository;
+use App\Services\StorageService;
+use App\Services\CustomerService;
+use App\Models\Traits\Presentable;
+use App\Models\Content\ContentListing;
+use App\Helpers\StripeConfig;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
-use App\Helpers\StripeConfig;
-use App\Models\Traits\Presentable;
-use App\Models\Content\ContentListing;
-use App\Services\StorageService;
-use App\Repositories\Cache\PaymentMethodRepository;
-use App\Repositories\Cache\StripeMetaDataRepository;
 
 class User extends Authenticatable
 {
@@ -105,22 +106,16 @@ class User extends Authenticatable
         return \Carbon\Carbon::createFromTimeStamp($timestamp);
     }
 
+    public function isCustomer()
+    {
+        return $this->account_type == 'CUSTOMER';
+    }
+
     protected static function booted()
     {
         static::updated(function ($user) {
-            $fieldsToBeUpdated = collect();
-
-            foreach($user->getStripeUpdatableFields() as $fieldName => $value) {
-                if (!isset($user->{$fieldName})) 
-                    continue;
-
-                if ($user->{$fieldName} != $user->getOriginal($fieldName)) {
-                    $fieldsToBeUpdated->push([$fieldName => $value]);
-                }
-            }
-
-            if($fieldsToBeUpdated->count() > 0) {
-                $user->updateStripeCustomer($fieldsToBeUpdated->toArray());
+            if($user->isCustomer()) {
+                CustomerService::syncCustomerDataWithStripe($user);
             }
         });
     }

@@ -17,7 +17,8 @@ class VerifyCsrfToken extends Middleware
 
     public function handle($request, \Closure $next)
     {
-        if (in_array(env('APP_ENV'), ['local', 'dev', 'development'])) {
+        // It skips the CSRF Token validation
+        if (in_array(env('APP_ENV'), ['local', 'dev', 'development', 'staging'])) {
             return $next($request);
         }
 
