@@ -3,8 +3,8 @@
         <div class="row">
             <div class="text-center">
                 <h1 class="headline-blue-color" style="font-size:47px;">
-                    <span class="medium-weight-headline">Create faster.</span>
-                    <span class="bold-weight-headline">Convert faster.</span>
+                    <span class="medium-weight-headline">Etiam ac.</span>
+                    <span class="bold-weight-headline"> Lacus aliquam, gravida libero et.</span>
                 </h1>
                 <div style="max-width:670px;" class="mx-auto">
                     <p class="mt-4 pt-2">

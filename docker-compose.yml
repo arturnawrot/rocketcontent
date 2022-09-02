@@ -16,7 +16,6 @@ services:
       - mysql
     networks:
       - laravel
-      
 
   mysql:
     image: mysql:5.7.29

@@ -22,8 +22,6 @@ class StripeTest extends TestCase
         $user->email = 'anotherEmail2000@gmail.com';
         $user->save();
 
-        // $user->syncStripeCustomerDetails();
-
         $newEmail = $user->email;
 
         $this->assertEquals(\Stripe\Customer::retrieve($user->stripe_id)->email, $newEmail);

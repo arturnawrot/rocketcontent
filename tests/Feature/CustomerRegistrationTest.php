@@ -114,7 +114,7 @@ class CustomerRegistrationTest extends TestCase
         // @TODO assert more types of errors
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         $this->process->stop();
 

@@ -14,7 +14,31 @@ use Tests\TestCase;
 class SubscriptionTest extends TestCase
 {
     /** @test */
-    public function subscription_renews_correctly()
+    public function subscription_cancels()
+    {
+        Event::fake();
+
+        $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+        $user = $customerFactory->create();
+
+        $response = $this->actingAs($user)
+            ->post(route('customer.subscription.cancel'))
+            ->assertSessionHasNoErrors();
+        
+        sleep(30);
+        
+        $this->assertSame($user->isSubscribing(), True);
+
+        $subscriptions = $this->stripeClient->subscriptions->all(['limit' => 3, 'customer' => $user->stripe_id, 'status' => 'canceled']);
+
+        $this->assertEquals(count($subscriptions), 1);
+
+        // $customerFactory->destroy();
+    }
+
+
+    /** @test */
+    public function subscription_renews_upon_next_billing_cycle()
     {
         Event::fake();
 
@@ -27,18 +51,16 @@ class SubscriptionTest extends TestCase
         $event = new PaymentMethodAdded($user);
         (new UpdatePaymentMethodCache())->handle($event);
 
-        $stripeClient = app()->make(\Stripe\StripeClient::class);
-
-        $stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +1 hour')]);
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +1 hour')]);
 
         // Stripe needs a few seconds before they fully process new invoices.
         sleep(10);
 
-        $stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +2 hour')]);
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +2 hour')]);
 
-        sleep(10);
+        sleep(20);
         
-        $invoices = $stripeClient->invoices->all([
+        $invoices = $this->stripeClient->invoices->all([
             'customer' => $user->stripe_id,
             'limit' => 3
         ])['data'];
@@ -56,7 +78,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function subscription_expires_if_payment_method_does_not_work_anymore()
+    public function subscription_cancels_if_payment_method_does_not_work_anymore_upon_next_billing_cycle()
     {
         Event::fake();
 
@@ -93,24 +115,20 @@ class SubscriptionTest extends TestCase
         $event = new PaymentMethodDeleted($user);
         (new UpdatePaymentMethodCache())->handle($event);
 
-        $stripeClient = app()->make(\Stripe\StripeClient::class);
-
-        $stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +1 hour')]);
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +1 hour')]);
 
         // Stripe needs a few seconds before they fully process new invoices.
         sleep(10);
 
         // For some reason the test clock needs to be advanced for 2nd time to allow Stripe process everything correctly
-        $stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +2 hour')]);
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +2 hour')]);
 
-        sleep(10);
+        sleep(20);
 
-        $invoices = $stripeClient->invoices->all([
+        $invoices = $this->stripeClient->invoices->all([
             'customer' => $user->stripe_id,
             'limit' => 3
         ])['data'];
-
-        // dd($invoices);
 
         $this->assertEquals(count($invoices), 2);
 
@@ -120,7 +138,9 @@ class SubscriptionTest extends TestCase
         // 2nd month invoice
         $this->assertEquals($invoices[0]['paid'], False);
 
-        $subscriptions = $stripeClient->subscriptions->all(['limit' => 3, 'customer' => $user->stripe_id, 'status' => 'canceled'])['data'];
+        $this->assertSame($user->isSubscribing(), False);
+
+        $subscriptions = $this->stripeClient->subscriptions->all(['limit' => 3, 'customer' => $user->stripe_id, 'status' => 'canceled'])['data'];
 
         $this->assertEquals(count($subscriptions), 1);
 

@@ -8,7 +8,7 @@
             <div class="col order-md-1" data-aos="fade-up">
 
             <h1 class="display-3 text-center text-md-start" id="heading">
-            Need content for your business? We’ve got you covered.
+            Make your content <br> creation process <br> effortless. Instantly.
             </h1>
 
             <p class="lead text-center text-md-start text-muted mb-6 mb-lg-8 mt-4" id="hero-description">

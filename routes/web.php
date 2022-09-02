@@ -48,6 +48,8 @@ Route::middleware(['auth:CUSTOMER'])->group(function () {
 
     Route::patch('/payment-method/update', [App\Http\Controllers\Customer\PaymentMethodController::class, 'updatePaymentMethod'])->name('customer.payment-method.update');
 
+    Route::post('/subscription/cancel', [App\Http\Controllers\Customer\SubscriptionController::class, 'cancel'])->name('customer.subscription.cancel');
+
 });
 // END: Customer only area.
 
