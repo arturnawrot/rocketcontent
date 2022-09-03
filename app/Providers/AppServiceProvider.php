@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Stripe\StripeClient;
 use Laravel\Cashier\Http\Middleware\VerifyWebhookSignature;
 use App\Helpers\PHPUnit;
+use Laravel\Telescope\Telescope;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,8 +19,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $isRunningTests = PHPUnit::isPHPUnitProcessRunning();
-
-        // dd($isRunningTests);
 
         if ($isRunningTests and !($this->app->environment('production'))) {
             
@@ -41,9 +40,9 @@ class AppServiceProvider extends ServiceProvider
             \DB::purge('mysql');
         }
 
-        if(!$isRunningTests and !\App::runningUnitTests()) {
+        if (!$isRunningTests and !($this->app->environment('production'))) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);    
+            $this->app->register(TelescopeServiceProvider::class);
         }
 
         $this->app->singleton(StripeClient::class, function()
