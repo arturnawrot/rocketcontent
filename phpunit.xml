@@ -27,7 +27,6 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
 
-        <server name="TELESCOPE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="STRIPE_SECRET" value="sk_test_51K6PGJGAA2s7aUvAopiMJKjetKm8tL7ue0QqOu6Ur7JNgjrapCAVHggtVF6QODYrlKRfL4oQtGp0jubQalaSOlSQ00LpB4KY6U"/>
         

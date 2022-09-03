@@ -18,6 +18,6 @@ class SubscriptionController extends Controller
 
     public function cancel()
     {
-        $this->subscriptionService->cancel(auth()->user());
+        $this->subscriptionService->cancel(auth()->user(), config('subscriptions.product_name'));
     }
 }

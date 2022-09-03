@@ -18,22 +18,41 @@ class SubscriptionTest extends TestCase
     {
         Event::fake();
 
+        $testClock = \Stripe\TestHelpers\TestClock::create(['frozen_time' => strtotime('+1 month'), 'name' => 'Monthly renewal']);
+
         $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+        $customerFactory->addParameters(stripeOptions: ['test_clock' => $testClock['id']]);
         $user = $customerFactory->create();
 
         $response = $this->actingAs($user)
             ->post(route('customer.subscription.cancel'))
             ->assertSessionHasNoErrors();
         
-        sleep(30);
+        sleep(10);
         
+        $subscriptions = $this->stripeClient->subscriptions->all(['limit' => 3, 'customer' => $user->stripe_id, 'status' => 'active']);
+
         $this->assertSame($user->isSubscribing(), True);
+
+        $this->assertEquals(count($subscriptions), 1);
+
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +1 hour')]);
+
+        // Stripe needs a few seconds before they fully process new invoices.
+        sleep(10);
+
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+2 month +2 hour')]);
+
+        sleep(20);
 
         $subscriptions = $this->stripeClient->subscriptions->all(['limit' => 3, 'customer' => $user->stripe_id, 'status' => 'canceled']);
 
         $this->assertEquals(count($subscriptions), 1);
+        
+        $user->refresh();
+        $this->assertSame($user->isSubscribing(), False);
 
-        // $customerFactory->destroy();
+        $customerFactory->destroy();
     }
 
 
@@ -78,7 +97,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function subscription_cancels_if_payment_method_does_not_work_anymore_upon_next_billing_cycle()
+    public function subscription_is_canceled_if_payment_method_does_not_work_anymore_upon_next_billing_cycle()
     {
         Event::fake();
 
@@ -110,7 +129,6 @@ class SubscriptionTest extends TestCase
         $response = $this->actingAs($user)->post(route('customer.payment-method.delete'), [
             'payment_method' => $backupPm['id']
         ]);
-
 
         $event = new PaymentMethodDeleted($user);
         (new UpdatePaymentMethodCache())->handle($event);
