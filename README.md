@@ -13,6 +13,18 @@ Use docker to run the project
 docker-compose up -d
 docker exec -it php-rocketcontent make install
 ```
+### Create first admin account
+```bash
+docker exec -it php-rocketcontent php artisan command:create-admin-account
+
+What's your valid email address? (need to verify before you can log in):
+ > john@doe.com     
+
+Admin account created.
+Login: john@doe.com
+Password: ******* (you can change the password later in the admin panel)
+```
+
 ### Troubleshooting common problems
 `No releases available for package "pecl.php.net/xdebug"`
 
