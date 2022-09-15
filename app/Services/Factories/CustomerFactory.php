@@ -19,9 +19,9 @@ class CustomerFactory extends DtoFactory {
         'method' => 'register'
     ];
 
-    protected function getProperties()
+    protected function setProperties()
     {
-        return [
+        $this->properties = [
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
             'password' => $this->faker->password(),

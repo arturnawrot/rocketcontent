@@ -14,7 +14,50 @@ use Tests\TestCase;
 class SubscriptionTest extends TestCase
 {
     /** @test */
-    public function subscription_cancels()
+    public function free_trial_subscription_cancels_immidietely()
+    {
+        Event::fake();
+
+        $testClock = \Stripe\TestHelpers\TestClock::create(['frozen_time' => strtotime('+1 hour'), 'name' => 'Monthly renewal']);
+
+        $customerFactory = $this->app->make(\App\Services\Factories\CustomerFactory::class);
+        $customerFactory->addParameters(stripeOptions: ['test_clock' => $testClock['id']]);
+        $customerFactory->addParameters(trialDays: 14);
+        $user = $customerFactory->create();
+
+        sleep(20);
+
+        $user->refresh();
+        $this->assertSame($user->isOnTrial(), True);
+
+        $response = $this->actingAs($user)
+            ->post(route('customer.subscription.cancel'))
+            ->assertSessionHasNoErrors();
+        
+        sleep(10);
+        
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+4 hour')]);
+
+        // Stripe needs a few seconds before they fully process new invoices.
+        sleep(10);
+
+        $this->stripeClient->testHelpers->testClocks->advance($testClock['id'], ['frozen_time' => strtotime('+8 hour')]);
+
+        sleep(20);
+
+        $subscriptions = $this->stripeClient->subscriptions->all(['limit' => 3, 'customer' => $user->stripe_id, 'status' => 'canceled']);
+
+        $this->assertEquals(count($subscriptions), 1);
+        
+        $user->refresh();
+        $this->assertSame($user->isSubscribing(), False);
+        $this->assertSame($user->isOnTrial(), False);
+
+        $customerFactory->destroy();
+    }
+
+    /** @test */
+    public function regular_subscription_cancels()
     {
         Event::fake();
 

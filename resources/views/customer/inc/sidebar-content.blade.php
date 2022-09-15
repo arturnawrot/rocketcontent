@@ -1,8 +1,5 @@
-<nav id="sidebarMenu" class="navbar-collapse collapse d-md-block bg-light sidebar">
-      <div class="sidebar-sticky text-sm-start mt-4">
-        <ul class="nav flex-column">
-          
-          <div class="my-4 d-block mx-auto">
+@section('sidebar-content')
+<div class="my-4 d-block mx-auto">
             <img src="/svg/logo.svg" id="logo"/>
           </div>
 
@@ -72,8 +69,4 @@
                   <div class="progress-value">90%</div>
               </div>
           </div>
-
-
-        </ul>
-      </div>
-</nav>
+@endsection

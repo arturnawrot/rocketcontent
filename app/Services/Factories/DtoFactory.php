@@ -33,7 +33,7 @@ abstract class DtoFactory implements DtoFactoryInterface {
             throw new FactoryExpection("{$clsName} does not implement define() which is a required method");
         }
 
-        $this->properties = $this->getProperties();
+        $this->setProperties();
     }
 
     public function create()
@@ -89,9 +89,19 @@ abstract class DtoFactory implements DtoFactoryInterface {
         return array();
     }
 
+    public function getProperty(string $propertyName) : mixed 
+    {
+        return $this->getProperties()["$propertyName"];
+    }
+
+    protected function getProperties()
+    {
+        return $this->properties;
+    }
+
     abstract public function destroy();
 
-    abstract protected function getProperties();
+    abstract protected function setProperties();
 
     abstract protected function define();
 }

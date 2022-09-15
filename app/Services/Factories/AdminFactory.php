@@ -4,12 +4,12 @@ namespace App\Services\Factories;
 
 use App\DataTransferObject\UserData;
 use App\Services\Factories\DtoFactory;
-use App\Services\UserService;
+use App\Services\AdminService;
 
-class UserFactory extends DtoFactory {
+class AdminFactory extends DtoFactory {
 
     protected $serviceDestination = [
-        'class' => UserService::class,
+        'class' => AdminService::class,
         'method' => 'create'
     ];
     

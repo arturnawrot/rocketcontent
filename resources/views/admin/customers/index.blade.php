@@ -1,4 +1,4 @@
-@extends('admin.templates.main')
+@extends('panel-shared.templates.main')
 
 @section('page_title', 'Customers')
 

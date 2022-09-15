@@ -55,11 +55,11 @@ Route::middleware(['auth:CUSTOMER'])->group(function () {
 
 
 // START: Admin only area.
+Route::middleware(['auth:ADMIN'])->group(function () {
+    Route::view('/admin2131sa', 'admin/home')->name('admin.dashboard.view');
 
-Route::view('/admin2131sa', 'admin/home')->name('admin.home');
-
-Route::get('/admin2131sa/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('admin.customers.index');
-
+    Route::get('/admin2131sa/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('admin.customers.index');
+});
 // END: Admin only area.
 
 

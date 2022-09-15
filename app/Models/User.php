@@ -19,8 +19,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, Billable, Presentable;
 
+    // Don't edit these.
     public const ACCOUNT_TYPES = [
-        'ADMIN', 'CUSTOMER', 'WRITER'
+        'ADMIN', 'CUSTOMER', 'WRITER', 'MANAGER'
     ];
 
     protected $presenter = 'App\Presenters\UserPresenter';
@@ -126,5 +127,10 @@ class User extends Authenticatable
             'name' => $this->name,
             'email' => $this->email
         ];
+    }
+
+    public function isAdmin() : bool
+    {
+        return $this->account_type == 'ADMIN';
     }
 }

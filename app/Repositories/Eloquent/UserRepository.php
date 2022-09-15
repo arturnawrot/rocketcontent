@@ -20,4 +20,8 @@ class UserRepository {
     public static function getWriters() {
         return User::Where('account_type', 'WRITER')->get();
     }
+
+    public static function getManagers() {
+        return User::Where('account_type', 'MANAGER')->get();
+    }
 }
