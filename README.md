@@ -13,6 +13,10 @@ Use docker to run the project
 docker-compose up -d
 docker exec -it php-rocketcontent make install
 ```
+### Run tests
+```bash
+docker exec -it php-rocketcontent make test
+```
 ### Create first admin account
 ```bash
 docker exec -it php-rocketcontent php artisan command:create-admin-account
@@ -24,7 +28,11 @@ Admin account created.
 Login: john@doe.com
 Password: ******* (you can change the password later in the admin panel)
 ```
-
+### Update .env with your Stripe keys
+```
+STRIPE_KEY=
+STRIPE_SECRET=
+```
 ### Troubleshooting common problems
 `No releases available for package "pecl.php.net/xdebug"`
 
