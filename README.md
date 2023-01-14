@@ -2,8 +2,7 @@
 
 Content on demand SaaS with monthly or annual subscription required.
 
-
-
+Please keep in mind that the project is not finished yet. It's halfway done.
 
 ## Installation
 
