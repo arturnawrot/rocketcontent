@@ -36,3 +36,10 @@ STRIPE_SECRET=
 `No releases available for package "pecl.php.net/xdebug"`
 
 It's not our fault. Pecl servers have some issues with connectivity and you will have to try to rebuild another time, or you can use a VPN (Frankfurt, Germany worked flawlessly for me).
+
+## Screenshots
+
+![Main page](https://github.com/arturnawrot/rocketcontent/blob/master/screenshots/rocketcontent-front.PNG?raw=true)
+
+![Dashboard](https://github.com/arturnawrot/rocketcontent/blob/master/screenshots/dashboard.PNG?raw=true)
+
