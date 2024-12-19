@@ -1,8 +1,13 @@
-# rocketcontent.io
+# SaaS Stripe Boilerplate
 
-Content on demand SaaS with monthly or annual subscription required.
+### Features
 
-Please keep in mind that the project is not finished yet. It's halfway done.
+- [x] Login and registration system.
+- [x] Monthly subscriptions, including a free trial period.
+- [x] Addition and removal of credit cards.
+- [x] Subscription is automatically paused in the event of a failed payment or chargeback.
+- [x] Flawless synchronization between the local database and Stripe with proper caching.
+- [x] Integration tests cover all advanced Stripe use cases, such as handling chargebacks, preventing duplicate credit card entries, and ensuring the proper expiration of free trial periods.
 
 ## Installation
 
